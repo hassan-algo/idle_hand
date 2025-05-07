@@ -63,7 +63,6 @@ func NewDatabaseConnection() *DatabaseConnection {
 	} else if err := db.Ping(); err != nil {
 		panic(err)
 	}
-	// db.SetMaxOpenConns(50)
 	// defer db.Close()
 	return &DatabaseConnection{
 		psqlInfo:      psqlInfo,

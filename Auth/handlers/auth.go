@@ -1,94 +1,104 @@
 package handlers
 
 import (
+	"errors"
+	"log"
 	"net/http"
+	"strings"
 
 	"example.com/apis"
+	"example.com/extras"
 	"example.com/structs"
 	"github.com/labstack/echo/v4"
 )
 
 type AuthHandlers struct {
-	apiBusiness apis.APIBusiness
+	authBusiness apis.AuthBusiness
 }
 
 func NewAuthHandler() *AuthHandlers {
 	return &AuthHandlers{}
 }
 
-func (h *AuthHandlers) Connect(business apis.APIBusiness) error {
-	h.apiBusiness = business
+// @Summary Register new user
+// @Description
+// @Accept json
+// @Param  profile body structs.MyAuth true "Register user"
+// @Success 200 {object} structs.Response
+// @Router /auth [post]
+// @Tags auth
+func (h *AuthHandlers) Authentication(ec echo.Context) error {
+	body := extras.GetJSONRawBody(ec)
+	// extras.LogThisWithActor(i.e, "", body["email"].(string))
+
+	email := body["email"].(string)
+	password := body["password"].(string)
+
+	data, err := h.authBusiness.Authentication(email, password)
+	if err != nil {
+		return ec.JSON(http.StatusBadRequest, data)
+	}
+	return ec.JSON(http.StatusOK, data)
+}
+
+// Authenticate wraps a function with authentication logic.
+func (h *AuthHandlers) Authenticate(f func(ec echo.Context) error, role ...string) func(ec echo.Context) error {
+	return func(ec echo.Context) error {
+		// get headers
+		authHeader := ec.Request().Header.Get("Authorization")
+		if authHeader == "" {
+			return errors.New("auth Failed1")
+		}
+		splitHeader := strings.Split(authHeader, " ")
+		if len(splitHeader) < 3 {
+			log.Println(authHeader)
+			return errors.New("invalid Token!")
+		}
+		userGuid := splitHeader[2]
+		token := splitHeader[1]
+
+		err, userGuid, returnedRole := h.authBusiness.Authenticate(userGuid, token)
+
+		if err != nil {
+
+			res := structs.Response{
+				Valid:   false,
+				Message: "UnAuthorized Request1",
+				Data:    nil,
+			}
+			return ec.JSON(http.StatusUnauthorized, res)
+		}
+
+		if !extras.Contains(role, returnedRole) {
+			res := structs.Response{
+				Valid:   false,
+				Message: "UnAuthorized Request2",
+				Data:    nil,
+			}
+
+			return ec.JSON(http.StatusUnauthorized, res)
+		}
+
+		ec.Set("user_guid", userGuid)
+		// Proceed with the original function if authentication is successful
+		return f(ec)
+	}
+}
+
+// Connect is required to fulfill the apis.AuthHandler interface
+func (h *AuthHandlers) Connect(business apis.AuthBusiness) error {
+	h.authBusiness = business
 	return nil
 }
 
-// @Summary Get auth
-// @Description
-// @Produce json
-// @Success 200 {object} structs.Auth "auth"
-// @Router /auth [get]
-// @Security ApiKeyAuth
-// @Tags auth
-func (h *AuthHandlers) GET(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, structs.Response{Message: "Get Auth", Valid: true, Data: nil})
+func (h *AuthHandlers) Middleware(f func(ec echo.Context) error) func(ec echo.Context) error {
+	return func(ec echo.Context) error {
+		return f(ec)
+	}
 }
 
-// @Summary Post auth
-// @Description
-// @Produce json
-// @Param  product body structs.Auth true "Post auth"
-// @Success 200 {object} structs.Response
-// @Router /auth [post]
-// @Security ApiKeyAuth
-// @Tags auth
-func (h *AuthHandlers) POST(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, structs.Response{Message: "Post Auth", Valid: true, Data: nil})
+func (h *AuthHandlers) Decorate(f func(ec echo.Context) error) func(ec echo.Context) error {
+	return func(ec echo.Context) error {
+		return f(ec)
+	}
 }
-
-// @Summary Put auth
-// @Description
-// @Produce json
-// @Param  product body structs.Auth true "Put auth"
-// @Success 200 {object} structs.Response
-// @Router /auth [put]
-// @Security ApiKeyAuth
-// @Tags auth
-func (h *AuthHandlers) PUT(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, structs.Response{Message: "Put Auth", Valid: true, Data: nil})
-}
-
-// @Summary Delete auth
-// @Description
-// @Produce json
-// @Param  product body structs.Auth true "Delete auth"
-// @Success 200 {object} structs.Response
-// @Router /auth [delete]
-// @Security ApiKeyAuth
-// @Tags auth
-func (h *AuthHandlers) DELETE(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, structs.Response{Message: "Delete Auth", Valid: true, Data: nil})
-}
-
-// @Summary Get auth by id
-// @Description
-// @Produce json
-// @Param id path string true "id"
-// @Success 200 {object} structs.Auth "auth"
-// @Router /auth/{id} [get]
-// @Security ApiKeyAuth
-// @Tags auth
-func (h *AuthHandlers) GETBYID(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, structs.Response{Message: "Get auth by id", Valid: true, Data: nil})
-}
-
-// @Summary Multipost auth
-// @Description
-// @Produce json
-// @Param  product body structs.Auths true "Multipost auth"
-// @Success 200 {object} structs.Response
-// @Router /auth/multi [post]
-// @Security ApiKeyAuth
-// @Tags auth
-func (h *AuthHandlers) MULTIPOST(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, structs.Response{Message: "Multipost Auth", Valid: true, Data: nil})
-}
-
