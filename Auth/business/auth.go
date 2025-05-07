@@ -13,6 +13,7 @@ import (
 	"example.com/extras"
 	"example.com/structs"
 	"github.com/golang-jwt/jwt"
+	"github.com/google/uuid"
 )
 
 type AuthBusiness struct {
@@ -33,7 +34,53 @@ func (b *AuthBusiness) Authentication(email string, password string) (interface{
 	hash := md5.Sum([]byte(password))
 	hashPassword := hex.EncodeToString(hash[:])
 
-	// Extended SQL query to fetch last_login along with other user details
+	// First check if email exists
+	checkEmailQuery := "SELECT userguid FROM tbl_users WHERE LOWER(email) = LOWER($1) AND is_deleted = '0'"
+	var existingUserGuid string
+	err := b.dbCon.Con.QueryRow(checkEmailQuery, email).Scan(&existingUserGuid)
+
+	if err != nil {
+		if err == sql.ErrNoRows {
+			// Email doesn't exist, create new user
+			newUserGuid := uuid.New().String()  // Generate new UUID for user
+			loginToken := extras.GetSecretKey() // Generate new login token
+
+			insertQuery := "INSERT INTO tbl_users (userguid, email, password, login_token) VALUES ($1, $2, $3, $4)"
+			_, err := b.dbCon.Con.Exec(insertQuery, newUserGuid, email, hashPassword, loginToken)
+			if err != nil {
+				return structs.Response{Valid: false, Message: "Failed to create user: " + err.Error(), Data: nil}, err
+			}
+
+			// Create response for new user
+			claims := jwt.MapClaims{
+				"exp":      time.Now().Add(730 * time.Hour).Unix(),
+				"userguid": newUserGuid,
+				"email":    email,
+			}
+
+			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+			signedToken, err := token.SignedString([]byte(loginToken))
+			if err != nil {
+				return structs.Response{Valid: false, Message: err.Error(), Data: nil}, err
+			}
+
+			resUser := structs.ResponseUserWithToken{
+				Name:       "", // New user has no name yet
+				ProfilePic: "", // New user has no profile pic yet
+				Email:      email,
+				Token:      signedToken + " " + newUserGuid,
+			}
+
+			return structs.Response{
+				Valid:   true,
+				Message: "User created successfully",
+				Data:    resUser,
+			}, nil
+		}
+		return structs.Response{Valid: false, Message: "Database error: " + err.Error(), Data: nil}, err
+	}
+
+	// Email exists, proceed with normal login flow
 	query := "SELECT userguid, user_name, profile_photo, email, login_token, last_login FROM tbl_users WHERE (LOWER(email) = LOWER($1)) AND password = $2 AND is_deleted = '0'"
 	rowsRs, err := b.dbCon.Con.Query(query, email, hashPassword)
 
@@ -46,7 +93,7 @@ func (b *AuthBusiness) Authentication(email string, password string) (interface{
 
 	var obj structs.Credentials
 	for rowsRs.Next() {
-		var lastLogin sql.NullTime // Handling possible null values for last_login
+		var lastLogin sql.NullTime
 		err := rowsRs.Scan(&obj.UserGuid, &obj.FullName, &obj.ProfilePic, &obj.Email, &obj.Login_Token, &lastLogin)
 		if err != nil {
 			return structs.Response{Valid: false, Message: err.Error(), Data: nil}, err
@@ -54,10 +101,8 @@ func (b *AuthBusiness) Authentication(email string, password string) (interface{
 		results = append(results, obj)
 
 		if lastLogin.Valid && time.Since(lastLogin.Time) < 730*time.Hour {
-			// If last_login was less than 24 hours ago, use the existing login_token
-			obj.Login_Token, _ = b.getLoginToken(obj.UserGuid) // Assuming this function fetches the existing token
+			obj.Login_Token, _ = b.getLoginToken(obj.UserGuid)
 		} else {
-			// Otherwise, generate a new token and update it in the database
 			obj.Login_Token = extras.GetSecretKey()
 			updateTokenQuery := "UPDATE tbl_users SET login_token = $1, last_login = NOW() WHERE userguid = $2"
 			_, err := b.dbCon.Con.Exec(updateTokenQuery, obj.Login_Token, obj.UserGuid)
@@ -68,7 +113,7 @@ func (b *AuthBusiness) Authentication(email string, password string) (interface{
 	}
 
 	if len(results) < 1 {
-		return structs.Response{Valid: false, Message: "Data not received", Data: nil}, errors.New("No Data Found!")
+		return structs.Response{Valid: false, Message: "Invalid credentials", Data: nil}, errors.New("Invalid credentials")
 	}
 
 	claims := jwt.MapClaims{
@@ -92,7 +137,7 @@ func (b *AuthBusiness) Authentication(email string, password string) (interface{
 
 	res := structs.Response{
 		Valid:   true,
-		Message: obj.UserType,
+		Message: "User logged in successfully",
 		Data:    resUser,
 	}
 
