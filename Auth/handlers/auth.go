@@ -40,6 +40,19 @@ func (h *AuthHandlers) Authentication(ec echo.Context) error {
 	}
 	return ec.JSON(http.StatusOK, data)
 }
+func (h *AuthHandlers) Register(ec echo.Context) error {
+	body := extras.GetJSONRawBody(ec)
+	// extras.LogThisWithActor(i.e, "", body["email"].(string))
+
+	email := body["email"].(string)
+	password := body["password"].(string)
+
+	data, err := h.authBusiness.Register(email, password)
+	if err != nil {
+		return ec.JSON(http.StatusBadRequest, data)
+	}
+	return ec.JSON(http.StatusOK, data)
+}
 
 // Authenticate wraps a function with authentication logic.
 func (h *AuthHandlers) Authenticate(f func(ec echo.Context) error, role ...string) func(ec echo.Context) error {

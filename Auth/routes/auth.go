@@ -14,6 +14,7 @@ func NewAuthRoutes() *AuthRoutes {
 
 func (r *AuthRoutes) Connect(endPoint string, AuthHandler apis.AuthHandler, echo *echo.Echo) error {
 	echo.POST(endPoint, AuthHandler.Authentication)
+	echo.POST(endPoint+"/register", AuthHandler.Register)
 
 	return nil
 }

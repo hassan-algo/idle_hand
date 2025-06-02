@@ -33,11 +33,13 @@ type AuthBusiness interface {
 	Connect(*db.DatabaseConnection) error
 	Authenticate(string, string) (error, string, string)
 	Authentication(string, string) (interface{}, error)
+	Register(string, string) (interface{}, error)
 }
 
 type AuthHandler interface {
 	Connect(AuthBusiness) error
 	Authentication(echo.Context) error
+	Register(echo.Context) error
 	Authenticate(func(ec echo.Context) error, ...string) func(ec echo.Context) error
 }
 
