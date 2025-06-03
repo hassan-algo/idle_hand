@@ -54,7 +54,8 @@ const docTemplate = `{
                 }
             }
         },
-        "/channel_priority": {
+        
+        "/request_review": {
             "get": {
                 "security": [
                     {
@@ -65,20 +66,188 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "channel_priority"
+                    "request_review"
                 ],
-                "summary": "Get channel_priority",
+                "summary": "Get all request reviews",
                 "responses": {
                     "200": {
-                        "description": "channel_priority",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/structs.ChannelPriority"
+                            "$ref": "#/definitions/structs.RequestReview"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "request_review"
+                ],
+                "summary": "Create a new request review",
+                "parameters": [
+                    {
+                        "description": "Request Review Object",
+                        "name": "request_review",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.RequestReview"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.RequestReview"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "request_review"
+                ],
+                "summary": "Update an existing request review",
+                "parameters": [
+                    {
+                        "description": "Request Review Object",
+                        "name": "request_review",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.RequestReview"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.RequestReview"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "request_review"
+                ],
+                "summary": "Delete a request review",
+                "parameters": [
+                    {
+                        "description": "Request Review Object with GUID",
+                        "name": "request_review",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.RequestReview"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.RequestReview"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
             }
         },
-        "/contact_admin": {
+        "/request_review/{request_review_guid}": {
             "get": {
                 "security": [
                     {
@@ -89,21 +258,48 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "contact_admin"
+                    "request_review"
                 ],
-                "summary": "Get contact_admin",
+                "summary": "Get request review by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Request Review GUID",
+                        "name": "request_review_guid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "contact_admin",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/structs.ContactAdmin"
+                            "$ref": "#/definitions/structs.RequestReview"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
             }
         },
-        "/dashboard": {
-            "get": {
+        "/request_review/multi": {
+            "post": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -113,182 +309,14 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "dashboard"
+                    "request_review"
                 ],
-                "summary": "Get dashboard",
+                "summary": "Multiple request reviews creation",
                 "responses": {
-                    "200": {
-                        "description": "dashboard",
+                    "501": {
+                        "description": "Not Implemented",
                         "schema": {
-                            "$ref": "#/definitions/structs.DashboardData"
-                        }
-                    }
-                }
-            }
-        },
-        "/invitation": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "invitation"
-                ],
-                "summary": "Get invitation",
-                "responses": {
-                    "200": {
-                        "description": "invitation",
-                        "schema": {
-                            "$ref": "#/definitions/structs.Invitation"
-                        }
-                    }
-                }
-            }
-        },
-        "/mention_thread": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "mention_thread"
-                ],
-                "summary": "Get mention_thread",
-                "responses": {
-                    "200": {
-                        "description": "mention_thread",
-                        "schema": {
-                            "$ref": "#/definitions/structs.MentionThread"
-                        }
-                    }
-                }
-            }
-        },
-        "/product": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "user"
-                ],
-                "summary": "Get user profile",
-                "responses": {
-                    "200": {
-                        "description": "product",
-                        "schema": {
-                            "$ref": "#/definitions/structs.Product"
-                        }
-                    }
-                }
-            }
-        },
-        "/report_bug": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "report_bug"
-                ],
-                "summary": "Get report_bug",
-                "responses": {
-                    "200": {
-                        "description": "report_bug",
-                        "schema": {
-                            "$ref": "#/definitions/structs.ReportBug"
-                        }
-                    }
-                }
-            }
-        },
-        "/reports": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "reports"
-                ],
-                "summary": "Get reports",
-                "responses": {
-                    "200": {
-                        "description": "reports",
-                        "schema": {
-                            "$ref": "#/definitions/structs.Reports"
-                        }
-                    }
-                }
-            }
-        },
-        "/temp_data": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "temp_data"
-                ],
-                "summary": "Get temp_data",
-                "responses": {
-                    "200": {
-                        "description": "temp_data",
-                        "schema": {
-                            "$ref": "#/definitions/structs.TempData"
-                        }
-                    }
-                }
-            }
-        },
-        "/upload_data": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "upload_data"
-                ],
-                "summary": "Get upload_data",
-                "responses": {
-                    "200": {
-                        "description": "upload_data",
-                        "schema": {
-                            "$ref": "#/definitions/structs.UploadData"
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
@@ -296,170 +324,39 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "structs.ChannelPriority": {
+        
+        "handlers.ErrorResponse": {
             "type": "object",
             "properties": {
-                "channel_priority_id": {
-                    "type": "string"
-                },
-                "channel_priority_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.ContactAdmin": {
-            "type": "object",
-            "properties": {
-                "contact_admin_id": {
-                    "type": "string"
-                },
-                "contact_admin_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.DashboardData": {
-            "type": "object",
-            "properties": {
-                "all_locations": {},
-                "channels": {},
-                "location_members": {},
-                "locations": {},
-                "resolved_tasks": {},
-                "resolved_tickets": {},
-                "roles": {},
-                "total_tasks": {},
-                "total_tickets": {},
-                "users": {}
-            }
-        },
-        "structs.Invitation": {
-            "type": "object",
-            "properties": {
-                "invitation_id": {
-                    "type": "string"
-                },
-                "invitation_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.MentionThread": {
-            "type": "object",
-            "properties": {
-                "mention_thread_id": {
-                    "type": "string"
-                },
-                "mention_thread_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.MyAuth": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.Product": {
-            "type": "object",
-            "properties": {
-                "product_id": {
-                    "type": "string"
-                },
-                "product_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.ReportBug": {
-            "type": "object",
-            "properties": {
-                "report_bug_id": {
-                    "type": "string"
-                },
-                "report_bug_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.Reports": {
-            "type": "object",
-            "properties": {
-                "category": {
-                    "type": "string"
-                },
-                "created_by": {
-                    "type": "string"
-                },
-                "date_created": {
-                    "type": "string"
-                },
-                "excel_fullFileName": {
-                    "type": "string"
-                },
-                "fileType": {
-                    "type": "string"
-                },
-                "fileguid": {
-                    "type": "string"
-                },
-                "filesize": {
+                "status": {
                     "type": "integer"
                 },
-                "fullFileName": {
-                    "type": "string"
-                },
-                "isread": {
-                    "type": "boolean"
-                },
-                "repor_parameter": {
-                    "type": "string"
-                },
-                "reportguid": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.Response": {
-            "type": "object",
-            "properties": {
-                "data": {},
                 "message": {
                     "type": "string"
                 },
-                "valid": {
-                    "type": "boolean"
-                }
-            }
-        },
-        "structs.TempData": {
-            "type": "object",
-            "properties": {
-                "temp_data_id": {
-                    "type": "string"
-                },
-                "temp_data_name": {
+                "error": {
                     "type": "string"
                 }
             }
         },
-        "structs.UploadData": {
+        "structs.RequestReview": {
             "type": "object",
+            "required": [
+                "business_guid",
+                "user_guid"
+            ],
             "properties": {
-                "upload_data_id": {
+                "request_reviews_guid": {
                     "type": "string"
                 },
-                "upload_data_name": {
+                "business_guid": {
                     "type": "string"
+                },
+                "user_guid": {
+                    "type": "string"
+                },
+                "review_requested": {
+                    "type": "integer"
                 }
             }
         }
@@ -480,8 +377,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "Swagger Example API",
-	Description:      "This is a sample server Petstore server.",
+	Title:            "Review Service API",
+	Description:      "This is the Review Service API documentation.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
