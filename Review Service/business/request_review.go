@@ -22,6 +22,10 @@ func (b *RequestReviewBusiness) GET(data interface{}) (interface{}, error) {
 	request_reviews := structs.RequestReviews{
 		MyRequestReviews: []structs.RequestReview{},
 	}
+	err := b.dbCon.Con.Find(&request_reviews.MyRequestReviews).Error
+	if err != nil {
+		return nil, err
+	}
 	return request_reviews, nil
 }
 func (b *RequestReviewBusiness) GETBYID(data interface{}) (interface{}, error) {

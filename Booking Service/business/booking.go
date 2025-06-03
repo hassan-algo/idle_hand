@@ -22,6 +22,10 @@ func (b *BookingBusiness) GET(data interface{}) (interface{}, error) {
 	bookings := structs.Bookings{
 		MyBookings: []structs.Booking{},
 	}
+	err := b.dbCon.Con.Find(&bookings.MyBookings).Error
+	if err != nil {
+		return nil, err
+	}
 	return bookings, nil
 }
 func (b *BookingBusiness) GETBYID(data interface{}) (interface{}, error) {

@@ -31,7 +31,11 @@ func (h *RequestReviewHandlers) Connect(business apis.APIBusiness) error {
 // @Security ApiKeyAuth
 // @Tags request_review
 func (p *RequestReviewHandlers) GET(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, "GET RequestReview")
+	mydata, err := p.apiBusiness.GET(nil)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+	return ctx.JSON(http.StatusOK, mydata)
 }
 
 func (p *RequestReviewHandlers) POST(ctx echo.Context) error {

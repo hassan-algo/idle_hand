@@ -31,7 +31,11 @@ func (h *BookingHandlers) Connect(business apis.APIBusiness) error {
 // @Security ApiKeyAuth
 // @Tags booking
 func (p *BookingHandlers) GET(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, "GET Booking")
+	mydata, err := p.apiBusiness.GET(nil)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+	return ctx.JSON(http.StatusOK, mydata)
 }
 
 func (p *BookingHandlers) POST(ctx echo.Context) error {

@@ -19,9 +19,15 @@ func (b *BusinessDetailsBusiness) Connect(dbConnection *db.DatabaseConnection) e
 }
 
 func (b *BusinessDetailsBusiness) GET(data interface{}) (interface{}, error) {
+
 	business_detailss := structs.BusinessDetailss{
 		MyBusinessDetailss: []structs.BusinessDetails{
 		},
+
+	}
+	err := b.dbCon.Con.Find(&business_detailss.MyBusinessDetailss).Error
+	if err != nil {
+		return nil, err
 	}
 	return business_detailss, nil
 }
