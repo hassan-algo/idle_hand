@@ -313,18 +313,270 @@ const docTemplate = `{
                         "ApiKeyAuth": []
                     }
                 ],
+                "description": "Get all catalog availabilities",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "catalog_availability"
                 ],
-                "summary": "Get catalog_availability",
+                "summary": "Get all catalog availabilities",
                 "responses": {
                     "200": {
                         "description": "catalog_availability",
                         "schema": {
                             "$ref": "#/definitions/structs.CatalogAvailability"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Create a new catalog availability with the provided details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "catalog_availability"
+                ],
+                "summary": "Create a new catalog availability",
+                "parameters": [
+                    {
+                        "description": "Catalog Availability Object",
+                        "name": "catalog_availability",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.CatalogAvailability"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "created catalog availability",
+                        "schema": {
+                            "$ref": "#/definitions/structs.CatalogAvailability"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update an existing catalog availability with the provided details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "catalog_availability"
+                ],
+                "summary": "Update a catalog availability",
+                "parameters": [
+                    {
+                        "description": "Catalog Availability Object",
+                        "name": "catalog_availability",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.CatalogAvailability"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "updated catalog availability",
+                        "schema": {
+                            "$ref": "#/definitions/structs.CatalogAvailability"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete a catalog availability by its GUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "catalog_availability"
+                ],
+                "summary": "Delete a catalog availability",
+                "parameters": [
+                    {
+                        "description": "Catalog Availability Object with GUID",
+                        "name": "catalog_availability",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.CatalogAvailability"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "deleted catalog availability",
+                        "schema": {
+                            "$ref": "#/definitions/structs.CatalogAvailability"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/catalog_availability/multi": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Create multiple catalog availabilities at once",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "catalog_availability"
+                ],
+                "summary": "Multiple catalog availabilities creation",
+                "responses": {
+                    "501": {
+                        "description": "Not Implemented",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/catalog_availability/{catalog_availability_guid}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Get a specific catalog availability by its GUID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "catalog_availability"
+                ],
+                "summary": "Get catalog availability by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Catalog Availability GUID",
+                        "name": "catalog_availability_guid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "catalog availability",
+                        "schema": {
+                            "$ref": "#/definitions/structs.CatalogAvailability"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/ErrorResponse"
                         }
                     }
                 }
@@ -424,10 +676,12 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "accept_same_day_booking": {
-                    "type": "integer"
+                    "type": "number",
+                    "format": "float64"
                 },
                 "buffer_per_appointment": {
-                    "type": "integer"
+                    "type": "number",
+                    "format": "float64"
                 },
                 "business_guid": {
                     "type": "string"
@@ -442,10 +696,12 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "hours_per_day": {
-                    "type": "integer"
+                    "type": "number",
+                    "format": "float64"
                 },
                 "number_of_breaks": {
-                    "type": "integer"
+                    "type": "number",
+                    "format": "float64"
                 },
                 "slots_per_day": {
                     "type": "string"
@@ -501,6 +757,20 @@ const docTemplate = `{
                 },
                 "valid": {
                     "type": "boolean"
+                }
+            }
+        },
+        "ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "error": {
+                    "type": "string"
                 }
             }
         }
