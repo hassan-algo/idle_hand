@@ -50,6 +50,11 @@ func main() {
 		routes.NewBusinessDetailsRoutes(),
 		handlers.NewBusinessDetailsHandler(),
 		business.NewBusinessDetailsBusiness(), e, authAPI)
+	apis.NewAPI("/business_rating",
+		postgres,
+		routes.NewBusinessRatingRoutes(),
+		handlers.NewBusinessRatingHandler(),
+		business.NewBusinessRatingBusiness(), e, authAPI)
 	// Serve the Swagger UI
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
