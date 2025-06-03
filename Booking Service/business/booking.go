@@ -51,9 +51,19 @@ func (b *BookingBusiness) MULTIPOST(data interface{}) (interface{}, error) {
 }
 func (b *BookingBusiness) PUT(data interface{}) (interface{}, error) {
 	booking, _ := data.(structs.Booking)
+	err := b.dbCon.Con.Model(&booking).Where("booking_guid = ?", booking.BookingGUID).Updates(booking).Error
+	if err != nil {
+		return nil, err
+	}
 	return booking, nil
 }
+
+// soft delete
 func (b *BookingBusiness) DELETE(data interface{}) (interface{}, error) {
 	booking, _ := data.(structs.Booking)
+	err := b.dbCon.Con.Model(&booking).Where("booking_guid = ?", booking.BookingGUID).Update("is_deleted", 1).Error
+	if err != nil {
+		return nil, err
+	}
 	return booking, nil
 }

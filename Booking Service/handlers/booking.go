@@ -61,10 +61,36 @@ func (p *BookingHandlers) POST(ctx echo.Context) error {
 }
 
 func (p *BookingHandlers) PUT(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, "PUT Booking")
+	data := extras.GetJSONRawBody(ctx)
+
+	my_struct := structs.Booking{
+		BookingGUID:      data["booking_guid"].(string),
+		BusinessGUID:     data["business_guid"].(string),
+		ClientGUID:       data["client_guid"].(string),
+		ServiceGUID:      data["service_guid"].(string),
+		BookingDate:      data["booking_date"].(string),
+		BookingTime:      data["booking_time"].(string),
+		BookingStatus:    data["booking_status"].(string),
+		CustomerRelation: data["customer_relation"].(string),
+		AssignStaffGUID:  data["assign_staff_guid"].(string),
+		PaymentMethod:    data["payment_method"].(string),
+	}
+	mydata, err := p.apiBusiness.PUT(my_struct)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+	return ctx.JSON(http.StatusOK, mydata)
 }
 func (p *BookingHandlers) DELETE(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, "DELETE Booking")
+	data := extras.GetJSONRawBody(ctx)
+	my_struct := structs.Booking{
+		BookingGUID: data["booking_guid"].(string),
+	}
+	mydata, err := p.apiBusiness.DELETE(my_struct)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+	return ctx.JSON(http.StatusOK, mydata)
 }
 
 func (p *BookingHandlers) GETBYID(ctx echo.Context) error {
