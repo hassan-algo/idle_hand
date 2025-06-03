@@ -56,6 +56,11 @@ func main() {
 		routes.NewBusinessStaffRoutes(),
 		handlers.NewBusinessStaffHandler(),
 		business.NewBusinessStaffBusiness(), e, authAPI)
+	apis.NewAPI("/password_management",
+		postgres,
+		routes.NewPasswordManagementRoutes(),
+		handlers.NewPasswordManagementHandler(),
+		business.NewPasswordManagementBusiness(), e, authAPI)
 	// Serve the Swagger UI
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
