@@ -1,44 +1,68 @@
 basePath: /
 definitions:
-  structs.ChannelPriority:
+  structs.BusinessPolicies:
     properties:
-      channel_priority_id:
+      booking_deposite_percentage:
+        type: integer
+      booking_polices:
         type: string
-      channel_priority_name:
+      booking_terms:
+        type: string
+      business_guid:
+        type: string
+      business_policies_guid:
+        type: string
+      cancellation_amount:
+        type: integer
+      cancellation_hours:
+        type: integer
+      catalog_guid:
+        type: string
+      no_show_fee:
+        type: integer
+    type: object
+  structs.Catalog:
+    properties:
+      assigned_staff_guid:
+        type: string
+      business_guid:
+        type: string
+      catalog_category:
+        type: string
+      catalog_description:
+        type: string
+      catalog_guid:
+        type: string
+      catalog_name:
+        type: string
+      catalog_offering:
+        type: string
+      catalog_photo:
+        type: string
+      catalog_price:
         type: string
     type: object
-  structs.ContactAdmin:
+  structs.CatalogAvailability:
     properties:
-      contact_admin_id:
+      accept_same_day_booking:
+        type: integer
+      buffer_per_appointment:
+        type: integer
+      business_guid:
         type: string
-      contact_admin_name:
+      catalog_availability_guid:
         type: string
-    type: object
-  structs.DashboardData:
-    properties:
-      all_locations: {}
-      channels: {}
-      location_members: {}
-      locations: {}
-      resolved_tasks: {}
-      resolved_tickets: {}
-      roles: {}
-      total_tasks: {}
-      total_tickets: {}
-      users: {}
-    type: object
-  structs.Invitation:
-    properties:
-      invitation_id:
+      catalog_guid:
         type: string
-      invitation_name:
+      day_of_week:
         type: string
-    type: object
-  structs.MentionThread:
-    properties:
-      mention_thread_id:
+      hours_per_day:
+        type: integer
+      number_of_breaks:
+        type: integer
+      slots_per_day:
         type: string
-      mention_thread_name:
+      time_per_break:
         type: string
     type: object
   structs.MyAuth:
@@ -48,45 +72,19 @@ definitions:
       password:
         type: string
     type: object
-  structs.Product:
+  structs.Offers:
     properties:
-      product_id:
+      business_guid:
         type: string
-      product_name:
+      customer_type:
         type: string
-    type: object
-  structs.ReportBug:
-    properties:
-      report_bug_id:
-        type: string
-      report_bug_name:
-        type: string
-    type: object
-  structs.Reports:
-    properties:
-      category:
-        type: string
-      created_by:
-        type: string
-      date_created:
-        type: string
-      excel_fullFileName:
-        type: string
-      fileType:
-        type: string
-      fileguid:
-        type: string
-      filesize:
+      medium:
         type: integer
-      fullFileName:
+      offer_guid:
         type: string
-      isread:
-        type: boolean
-      repor_parameter:
+      offer_message:
         type: string
-      reportguid:
-        type: string
-      title:
+      offer_title:
         type: string
     type: object
   structs.Response:
@@ -94,22 +92,10 @@ definitions:
       data: {}
       message:
         type: string
+      status_code:
+        type: integer
       valid:
         type: boolean
-    type: object
-  structs.TempData:
-    properties:
-      temp_data_id:
-        type: string
-      temp_data_name:
-        type: string
-    type: object
-  structs.UploadData:
-    properties:
-      upload_data_id:
-        type: string
-      upload_data_name:
-        type: string
     type: object
 info:
   contact:
@@ -143,146 +129,190 @@ paths:
       summary: Register new user
       tags:
       - auth
-  /channel_priority:
+  /business_policies:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a business policy by its GUID
+      parameters:
+      - description: Business Policy Object with GUID
+        in: body
+        name: business_policy
+        required: true
+        schema:
+          $ref: '#/definitions/structs.BusinessPolicies'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: deleted business policy
+          schema:
+            $ref: '#/definitions/structs.BusinessPolicies'
+        "400":
+          description: error message
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Delete a business policy
+      tags:
+      - business_policies
+    get:
+      description: Get all business policies
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: business_policies
+          schema:
+            $ref: '#/definitions/structs.BusinessPolicies'
+        "400":
+          description: error message
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Get all business policies
+      tags:
+      - business_policies
+    post:
+      consumes:
+      - application/json
+      description: Create a new business policy with the provided details
+      parameters:
+      - description: Business Policy Object
+        in: body
+        name: business_policy
+        required: true
+        schema:
+          $ref: '#/definitions/structs.BusinessPolicies'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: created business policy
+          schema:
+            $ref: '#/definitions/structs.BusinessPolicies'
+        "400":
+          description: error message
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Create a new business policy
+      tags:
+      - business_policies
+    put:
+      consumes:
+      - application/json
+      description: Update an existing business policy with the provided details
+      parameters:
+      - description: Business Policy Object
+        in: body
+        name: business_policy
+        required: true
+        schema:
+          $ref: '#/definitions/structs.BusinessPolicies'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: updated business policy
+          schema:
+            $ref: '#/definitions/structs.BusinessPolicies'
+        "400":
+          description: error message
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Update a business policy
+      tags:
+      - business_policies
+  /business_policies/{business_policies_guid}:
+    get:
+      description: Get a specific business policy by its GUID
+      parameters:
+      - description: Business Policy GUID
+        in: path
+        name: business_policies_guid
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: business policy
+          schema:
+            $ref: '#/definitions/structs.BusinessPolicies'
+        "400":
+          description: error message
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Get business policy by ID
+      tags:
+      - business_policies
+  /business_policies/multi:
+    post:
+      consumes:
+      - application/json
+      description: Create multiple business policies at once
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: MULTIPOST BusinessPolicies
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: Multiple business policies creation
+      tags:
+      - business_policies
+  /catalog:
     get:
       produces:
       - application/json
       responses:
         "200":
-          description: channel_priority
+          description: catalog
           schema:
-            $ref: '#/definitions/structs.ChannelPriority'
+            $ref: '#/definitions/structs.Catalog'
       security:
       - ApiKeyAuth: []
-      summary: Get channel_priority
+      summary: Get catalog
       tags:
-      - channel_priority
-  /contact_admin:
+      - catalog
+  /catalog_availability:
     get:
       produces:
       - application/json
       responses:
         "200":
-          description: contact_admin
+          description: catalog_availability
           schema:
-            $ref: '#/definitions/structs.ContactAdmin'
+            $ref: '#/definitions/structs.CatalogAvailability'
       security:
       - ApiKeyAuth: []
-      summary: Get contact_admin
+      summary: Get catalog_availability
       tags:
-      - contact_admin
-  /dashboard:
+      - catalog_availability
+  /offers:
     get:
       produces:
       - application/json
       responses:
         "200":
-          description: dashboard
+          description: offers
           schema:
-            $ref: '#/definitions/structs.DashboardData'
+            $ref: '#/definitions/structs.Offers'
       security:
       - ApiKeyAuth: []
-      summary: Get dashboard
+      summary: Get offers
       tags:
-      - dashboard
-  /invitation:
-    get:
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: invitation
-          schema:
-            $ref: '#/definitions/structs.Invitation'
-      security:
-      - ApiKeyAuth: []
-      summary: Get invitation
-      tags:
-      - invitation
-  /mention_thread:
-    get:
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: mention_thread
-          schema:
-            $ref: '#/definitions/structs.MentionThread'
-      security:
-      - ApiKeyAuth: []
-      summary: Get mention_thread
-      tags:
-      - mention_thread
-  /product:
-    get:
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: product
-          schema:
-            $ref: '#/definitions/structs.Product'
-      security:
-      - ApiKeyAuth: []
-      summary: Get user profile
-      tags:
-      - user
-  /report_bug:
-    get:
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: report_bug
-          schema:
-            $ref: '#/definitions/structs.ReportBug'
-      security:
-      - ApiKeyAuth: []
-      summary: Get report_bug
-      tags:
-      - report_bug
-  /reports:
-    get:
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: reports
-          schema:
-            $ref: '#/definitions/structs.Reports'
-      security:
-      - ApiKeyAuth: []
-      summary: Get reports
-      tags:
-      - reports
-  /temp_data:
-    get:
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: temp_data
-          schema:
-            $ref: '#/definitions/structs.TempData'
-      security:
-      - ApiKeyAuth: []
-      summary: Get temp_data
-      tags:
-      - temp_data
-  /upload_data:
-    get:
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: upload_data
-          schema:
-            $ref: '#/definitions/structs.UploadData'
-      security:
-      - ApiKeyAuth: []
-      summary: Get upload_data
-      tags:
-      - upload_data
+      - offers
 securityDefinitions:
   BearerAuth:
     description: '"Bearer token"'

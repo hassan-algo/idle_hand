@@ -47,79 +47,235 @@
                 }
             }
         },
-        "/channel_priority": {
+        "/business_policies": {
             "get": {
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
                 ],
+                "description": "Get all business policies",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "channel_priority"
+                    "business_policies"
                 ],
-                "summary": "Get channel_priority",
+                "summary": "Get all business policies",
                 "responses": {
                     "200": {
-                        "description": "channel_priority",
+                        "description": "business_policies",
                         "schema": {
-                            "$ref": "#/definitions/structs.ChannelPriority"
+                            "$ref": "#/definitions/structs.BusinessPolicies"
+                        }
+                    },
+                    "400": {
+                        "description": "error message",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Update an existing business policy with the provided details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_policies"
+                ],
+                "summary": "Update a business policy",
+                "parameters": [
+                    {
+                        "description": "Business Policy Object",
+                        "name": "business_policy",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessPolicies"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "updated business policy",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessPolicies"
+                        }
+                    },
+                    "400": {
+                        "description": "error message",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Create a new business policy with the provided details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_policies"
+                ],
+                "summary": "Create a new business policy",
+                "parameters": [
+                    {
+                        "description": "Business Policy Object",
+                        "name": "business_policy",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessPolicies"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "created business policy",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessPolicies"
+                        }
+                    },
+                    "400": {
+                        "description": "error message",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "Delete a business policy by its GUID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_policies"
+                ],
+                "summary": "Delete a business policy",
+                "parameters": [
+                    {
+                        "description": "Business Policy Object with GUID",
+                        "name": "business_policy",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessPolicies"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "deleted business policy",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessPolicies"
+                        }
+                    },
+                    "400": {
+                        "description": "error message",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
             }
         },
-        "/contact_admin": {
-            "get": {
+        "/business_policies/multi": {
+            "post": {
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
                 ],
+                "description": "Create multiple business policies at once",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "contact_admin"
+                    "business_policies"
                 ],
-                "summary": "Get contact_admin",
+                "summary": "Multiple business policies creation",
                 "responses": {
                     "200": {
-                        "description": "contact_admin",
+                        "description": "MULTIPOST BusinessPolicies",
                         "schema": {
-                            "$ref": "#/definitions/structs.ContactAdmin"
+                            "type": "string"
                         }
                     }
                 }
             }
         },
-        "/dashboard": {
+        "/business_policies/{business_policies_guid}": {
             "get": {
                 "security": [
                     {
                         "ApiKeyAuth": []
                     }
                 ],
+                "description": "Get a specific business policy by its GUID",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "dashboard"
+                    "business_policies"
                 ],
-                "summary": "Get dashboard",
+                "summary": "Get business policy by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Business Policy GUID",
+                        "name": "business_policies_guid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "dashboard",
+                        "description": "business policy",
                         "schema": {
-                            "$ref": "#/definitions/structs.DashboardData"
+                            "$ref": "#/definitions/structs.BusinessPolicies"
+                        }
+                    },
+                    "400": {
+                        "description": "error message",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
             }
         },
-        "/invitation": {
+        "/catalog": {
             "get": {
                 "security": [
                     {
@@ -130,20 +286,20 @@
                     "application/json"
                 ],
                 "tags": [
-                    "invitation"
+                    "catalog"
                 ],
-                "summary": "Get invitation",
+                "summary": "Get catalog",
                 "responses": {
                     "200": {
-                        "description": "invitation",
+                        "description": "catalog",
                         "schema": {
-                            "$ref": "#/definitions/structs.Invitation"
+                            "$ref": "#/definitions/structs.Catalog"
                         }
                     }
                 }
             }
         },
-        "/mention_thread": {
+        "/catalog_availability": {
             "get": {
                 "security": [
                     {
@@ -154,20 +310,20 @@
                     "application/json"
                 ],
                 "tags": [
-                    "mention_thread"
+                    "catalog_availability"
                 ],
-                "summary": "Get mention_thread",
+                "summary": "Get catalog_availability",
                 "responses": {
                     "200": {
-                        "description": "mention_thread",
+                        "description": "catalog_availability",
                         "schema": {
-                            "$ref": "#/definitions/structs.MentionThread"
+                            "$ref": "#/definitions/structs.CatalogAvailability"
                         }
                     }
                 }
             }
         },
-        "/product": {
+        "/offers": {
             "get": {
                 "security": [
                     {
@@ -178,110 +334,14 @@
                     "application/json"
                 ],
                 "tags": [
-                    "user"
+                    "offers"
                 ],
-                "summary": "Get user profile",
+                "summary": "Get offers",
                 "responses": {
                     "200": {
-                        "description": "product",
+                        "description": "offers",
                         "schema": {
-                            "$ref": "#/definitions/structs.Product"
-                        }
-                    }
-                }
-            }
-        },
-        "/report_bug": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "report_bug"
-                ],
-                "summary": "Get report_bug",
-                "responses": {
-                    "200": {
-                        "description": "report_bug",
-                        "schema": {
-                            "$ref": "#/definitions/structs.ReportBug"
-                        }
-                    }
-                }
-            }
-        },
-        "/reports": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "reports"
-                ],
-                "summary": "Get reports",
-                "responses": {
-                    "200": {
-                        "description": "reports",
-                        "schema": {
-                            "$ref": "#/definitions/structs.Reports"
-                        }
-                    }
-                }
-            }
-        },
-        "/temp_data": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "temp_data"
-                ],
-                "summary": "Get temp_data",
-                "responses": {
-                    "200": {
-                        "description": "temp_data",
-                        "schema": {
-                            "$ref": "#/definitions/structs.TempData"
-                        }
-                    }
-                }
-            }
-        },
-        "/upload_data": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "upload_data"
-                ],
-                "summary": "Get upload_data",
-                "responses": {
-                    "200": {
-                        "description": "upload_data",
-                        "schema": {
-                            "$ref": "#/definitions/structs.UploadData"
+                            "$ref": "#/definitions/structs.Offers"
                         }
                     }
                 }
@@ -289,61 +349,101 @@
         }
     },
     "definitions": {
-        "structs.ChannelPriority": {
+        "structs.BusinessPolicies": {
             "type": "object",
             "properties": {
-                "channel_priority_id": {
+                "booking_deposite_percentage": {
+                    "type": "integer"
+                },
+                "booking_polices": {
                     "type": "string"
                 },
-                "channel_priority_name": {
+                "booking_terms": {
+                    "type": "string"
+                },
+                "business_guid": {
+                    "type": "string"
+                },
+                "business_policies_guid": {
+                    "type": "string"
+                },
+                "cancellation_amount": {
+                    "type": "integer"
+                },
+                "cancellation_hours": {
+                    "type": "integer"
+                },
+                "catalog_guid": {
+                    "type": "string"
+                },
+                "no_show_fee": {
+                    "type": "integer"
+                }
+            }
+        },
+        "structs.Catalog": {
+            "type": "object",
+            "properties": {
+                "assigned_staff_guid": {
+                    "type": "string"
+                },
+                "business_guid": {
+                    "type": "string"
+                },
+                "catalog_category": {
+                    "type": "string"
+                },
+                "catalog_description": {
+                    "type": "string"
+                },
+                "catalog_guid": {
+                    "type": "string"
+                },
+                "catalog_name": {
+                    "type": "string"
+                },
+                "catalog_offering": {
+                    "type": "string"
+                },
+                "catalog_photo": {
+                    "type": "string"
+                },
+                "catalog_price": {
                     "type": "string"
                 }
             }
         },
-        "structs.ContactAdmin": {
+        "structs.CatalogAvailability": {
             "type": "object",
             "properties": {
-                "contact_admin_id": {
+                "accept_same_day_booking": {
+                    "type": "integer"
+                },
+                "buffer_per_appointment": {
+                    "type": "integer"
+                },
+                "business_guid": {
                     "type": "string"
                 },
-                "contact_admin_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.DashboardData": {
-            "type": "object",
-            "properties": {
-                "all_locations": {},
-                "channels": {},
-                "location_members": {},
-                "locations": {},
-                "resolved_tasks": {},
-                "resolved_tickets": {},
-                "roles": {},
-                "total_tasks": {},
-                "total_tickets": {},
-                "users": {}
-            }
-        },
-        "structs.Invitation": {
-            "type": "object",
-            "properties": {
-                "invitation_id": {
+                "catalog_availability_guid": {
                     "type": "string"
                 },
-                "invitation_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.MentionThread": {
-            "type": "object",
-            "properties": {
-                "mention_thread_id": {
+                "catalog_guid": {
                     "type": "string"
                 },
-                "mention_thread_name": {
+                "day_of_week": {
+                    "type": "string"
+                },
+                "hours_per_day": {
+                    "type": "integer"
+                },
+                "number_of_breaks": {
+                    "type": "integer"
+                },
+                "slots_per_day": {
+                    "type": "string"
+                },
+                "time_per_break": {
                     "type": "string"
                 }
             }
@@ -359,65 +459,25 @@
                 }
             }
         },
-        "structs.Product": {
+        "structs.Offers": {
             "type": "object",
             "properties": {
-                "product_id": {
+                "business_guid": {
                     "type": "string"
                 },
-                "product_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.ReportBug": {
-            "type": "object",
-            "properties": {
-                "report_bug_id": {
+                "customer_type": {
                     "type": "string"
                 },
-                "report_bug_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.Reports": {
-            "type": "object",
-            "properties": {
-                "category": {
-                    "type": "string"
-                },
-                "created_by": {
-                    "type": "string"
-                },
-                "date_created": {
-                    "type": "string"
-                },
-                "excel_fullFileName": {
-                    "type": "string"
-                },
-                "fileType": {
-                    "type": "string"
-                },
-                "fileguid": {
-                    "type": "string"
-                },
-                "filesize": {
+                "medium": {
                     "type": "integer"
                 },
-                "fullFileName": {
+                "offer_guid": {
                     "type": "string"
                 },
-                "isread": {
-                    "type": "boolean"
-                },
-                "repor_parameter": {
+                "offer_message": {
                     "type": "string"
                 },
-                "reportguid": {
-                    "type": "string"
-                },
-                "title": {
+                "offer_title": {
                     "type": "string"
                 }
             }
@@ -429,30 +489,11 @@
                 "message": {
                     "type": "string"
                 },
+                "status_code": {
+                    "type": "integer"
+                },
                 "valid": {
                     "type": "boolean"
-                }
-            }
-        },
-        "structs.TempData": {
-            "type": "object",
-            "properties": {
-                "temp_data_id": {
-                    "type": "string"
-                },
-                "temp_data_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.UploadData": {
-            "type": "object",
-            "properties": {
-                "upload_data_id": {
-                    "type": "string"
-                },
-                "upload_data_name": {
-                    "type": "string"
                 }
             }
         }
