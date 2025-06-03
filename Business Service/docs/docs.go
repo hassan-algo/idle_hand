@@ -24,23 +24,65 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/auth": {
-            "post": {
-                "consumes": [
+        "/business_details": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "auth"
+                    "business_details"
                 ],
-                "summary": "Register new user",
+                "summary": "Get all business details",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessDetails"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_details"
+                ],
+                "summary": "Create a new business details",
                 "parameters": [
                     {
-                        "description": "Register user",
-                        "name": "profile",
+                        "description": "Business Details Object",
+                        "name": "business_details",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/structs.MyAuth"
+                            "$ref": "#/definitions/structs.BusinessDetails"
                         }
                     }
                 ],
@@ -48,13 +90,133 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/structs.Response"
+                            "$ref": "#/definitions/structs.BusinessDetails"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_details"
+                ],
+                "summary": "Update an existing business details",
+                "parameters": [
+                    {
+                        "description": "Business Details Object",
+                        "name": "business_details",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessDetails"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessDetails"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_details"
+                ],
+                "summary": "Delete a business details",
+                "parameters": [
+                    {
+                        "description": "Business Details Object with GUID",
+                        "name": "business_details",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessDetails"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessDetails"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
             }
         },
-        "/channel_priority": {
+        "/business_details/{business_guid}": {
             "get": {
                 "security": [
                     {
@@ -65,20 +227,71 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "channel_priority"
+                    "business_details"
                 ],
-                "summary": "Get channel_priority",
+                "summary": "Get business details by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Business GUID",
+                        "name": "business_guid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "channel_priority",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/structs.ChannelPriority"
+                            "$ref": "#/definitions/structs.BusinessDetails"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
             }
         },
-        "/contact_admin": {
+        "/business_details/multi": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_details"
+                ],
+                "summary": "Multiple business details creation",
+                "responses": {
+                    "501": {
+                        "description": "Not Implemented",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/business_rating": {
             "get": {
                 "security": [
                     {
@@ -89,20 +302,188 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "contact_admin"
+                    "business_rating"
                 ],
-                "summary": "Get contact_admin",
+                "summary": "Get all business ratings",
                 "responses": {
                     "200": {
-                        "description": "contact_admin",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/structs.ContactAdmin"
+                            "$ref": "#/definitions/structs.BusinessRating"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_rating"
+                ],
+                "summary": "Create a new business rating",
+                "parameters": [
+                    {
+                        "description": "Business Rating Object",
+                        "name": "business_rating",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessRating"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessRating"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_rating"
+                ],
+                "summary": "Update an existing business rating",
+                "parameters": [
+                    {
+                        "description": "Business Rating Object",
+                        "name": "business_rating",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessRating"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessRating"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_rating"
+                ],
+                "summary": "Delete a business rating",
+                "parameters": [
+                    {
+                        "description": "Business Rating Object with GUID",
+                        "name": "business_rating",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessRating"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessRating"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
             }
         },
-        "/dashboard": {
+        "/business_rating/{business_rating_guid}": {
             "get": {
                 "security": [
                     {
@@ -113,21 +494,48 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "dashboard"
+                    "business_rating"
                 ],
-                "summary": "Get dashboard",
+                "summary": "Get business rating by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Business Rating GUID",
+                        "name": "business_rating_guid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "dashboard",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/structs.DashboardData"
+                            "$ref": "#/definitions/structs.BusinessRating"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
             }
         },
-        "/invitation": {
-            "get": {
+        "/business_rating/multi": {
+            "post": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -137,158 +545,14 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "invitation"
+                    "business_rating"
                 ],
-                "summary": "Get invitation",
+                "summary": "Multiple business ratings creation",
                 "responses": {
-                    "200": {
-                        "description": "invitation",
+                    "501": {
+                        "description": "Not Implemented",
                         "schema": {
-                            "$ref": "#/definitions/structs.Invitation"
-                        }
-                    }
-                }
-            }
-        },
-        "/mention_thread": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "mention_thread"
-                ],
-                "summary": "Get mention_thread",
-                "responses": {
-                    "200": {
-                        "description": "mention_thread",
-                        "schema": {
-                            "$ref": "#/definitions/structs.MentionThread"
-                        }
-                    }
-                }
-            }
-        },
-        "/product": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "user"
-                ],
-                "summary": "Get user profile",
-                "responses": {
-                    "200": {
-                        "description": "product",
-                        "schema": {
-                            "$ref": "#/definitions/structs.Product"
-                        }
-                    }
-                }
-            }
-        },
-        "/report_bug": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "report_bug"
-                ],
-                "summary": "Get report_bug",
-                "responses": {
-                    "200": {
-                        "description": "report_bug",
-                        "schema": {
-                            "$ref": "#/definitions/structs.ReportBug"
-                        }
-                    }
-                }
-            }
-        },
-        "/reports": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "reports"
-                ],
-                "summary": "Get reports",
-                "responses": {
-                    "200": {
-                        "description": "reports",
-                        "schema": {
-                            "$ref": "#/definitions/structs.Reports"
-                        }
-                    }
-                }
-            }
-        },
-        "/temp_data": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "temp_data"
-                ],
-                "summary": "Get temp_data",
-                "responses": {
-                    "200": {
-                        "description": "temp_data",
-                        "schema": {
-                            "$ref": "#/definitions/structs.TempData"
-                        }
-                    }
-                }
-            }
-        },
-        "/upload_data": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "upload_data"
-                ],
-                "summary": "Get upload_data",
-                "responses": {
-                    "200": {
-                        "description": "upload_data",
-                        "schema": {
-                            "$ref": "#/definitions/structs.UploadData"
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
@@ -296,177 +560,111 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "structs.ChannelPriority": {
+        "handlers.ErrorResponse": {
             "type": "object",
             "properties": {
-                "channel_priority_id": {
-                    "type": "string"
-                },
-                "channel_priority_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.ContactAdmin": {
-            "type": "object",
-            "properties": {
-                "contact_admin_id": {
-                    "type": "string"
-                },
-                "contact_admin_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.DashboardData": {
-            "type": "object",
-            "properties": {
-                "all_locations": {},
-                "channels": {},
-                "location_members": {},
-                "locations": {},
-                "resolved_tasks": {},
-                "resolved_tickets": {},
-                "roles": {},
-                "total_tasks": {},
-                "total_tickets": {},
-                "users": {}
-            }
-        },
-        "structs.Invitation": {
-            "type": "object",
-            "properties": {
-                "invitation_id": {
-                    "type": "string"
-                },
-                "invitation_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.MentionThread": {
-            "type": "object",
-            "properties": {
-                "mention_thread_id": {
-                    "type": "string"
-                },
-                "mention_thread_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.MyAuth": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.Product": {
-            "type": "object",
-            "properties": {
-                "product_id": {
-                    "type": "string"
-                },
-                "product_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.ReportBug": {
-            "type": "object",
-            "properties": {
-                "report_bug_id": {
-                    "type": "string"
-                },
-                "report_bug_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.Reports": {
-            "type": "object",
-            "properties": {
-                "category": {
-                    "type": "string"
-                },
-                "created_by": {
-                    "type": "string"
-                },
-                "date_created": {
-                    "type": "string"
-                },
-                "excel_fullFileName": {
-                    "type": "string"
-                },
-                "fileType": {
-                    "type": "string"
-                },
-                "fileguid": {
-                    "type": "string"
-                },
-                "filesize": {
+                "status": {
                     "type": "integer"
                 },
-                "fullFileName": {
-                    "type": "string"
-                },
-                "isread": {
-                    "type": "boolean"
-                },
-                "repor_parameter": {
-                    "type": "string"
-                },
-                "reportguid": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.Response": {
-            "type": "object",
-            "properties": {
-                "data": {},
                 "message": {
                     "type": "string"
                 },
-                "valid": {
-                    "type": "boolean"
-                }
-            }
-        },
-        "structs.TempData": {
-            "type": "object",
-            "properties": {
-                "temp_data_id": {
-                    "type": "string"
-                },
-                "temp_data_name": {
+                "error": {
                     "type": "string"
                 }
             }
         },
-        "structs.UploadData": {
+        "structs.BusinessDetails": {
             "type": "object",
+            "required": [
+                "business_name",
+                "industry_type",
+                "business_phone_number",
+                "business_email",
+                "business_address1",
+                "business_city",
+                "business_zip_code"
+            ],
             "properties": {
-                "upload_data_id": {
+                "business_guid": {
                     "type": "string"
                 },
-                "upload_data_name": {
+                "business_name": {
+                    "type": "string"
+                },
+                "industry_type": {
+                    "type": "string"
+                },
+                "business_description": {
+                    "type": "string"
+                },
+                "business_phone_number": {
+                    "type": "string"
+                },
+                "business_logo": {
+                    "type": "string"
+                },
+                "business_photo": {
+                    "type": "string"
+                },
+                "business_email": {
+                    "type": "string"
+                },
+                "business_address1": {
+                    "type": "string"
+                },
+                "business_address2": {
+                    "type": "string"
+                },
+                "business_city": {
+                    "type": "string"
+                },
+                "business_zip_code": {
+                    "type": "string"
+                },
+                "business_social_media": {
+                    "type": "string"
+                },
+                "business_payment_method": {
+                    "type": "string"
+                },
+                "business_license": {
+                    "type": "string"
+                },
+                "business_location": {
+                    "type": "string"
+                }
+            }
+        },
+        "structs.BusinessRating": {
+            "type": "object",
+            "required": [
+                "business_guid",
+                "user_guid",
+                "review_text",
+                "rating"
+            ],
+            "properties": {
+                "business_rating_guid": {
+                    "type": "string"
+                },
+                "business_guid": {
+                    "type": "string"
+                },
+                "user_guid": {
+                    "type": "string"
+                },
+                "review_text": {
+                    "type": "string"
+                },
+                "rating": {
                     "type": "string"
                 }
             }
         }
     },
     "securityDefinitions": {
-        "BearerAuth": {
-            "description": "\"Bearer token\"",
+        "ApiKeyAuth": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"
@@ -480,8 +678,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "Swagger Example API",
-	Description:      "This is a sample server Petstore server.",
+	Title:            "Business Service API",
+	Description:      "This is the Business Service API documentation.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
@@ -491,3 +689,4 @@ var SwaggerInfo = &swag.Spec{
 func init() {
 	swag.Register(SwaggerInfo.InstanceName(), SwaggerInfo)
 }
+
