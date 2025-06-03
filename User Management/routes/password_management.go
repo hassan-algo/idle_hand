@@ -19,7 +19,7 @@ func (r *PasswordManagementRoutes) Connect(endPoint string, password_managementH
 	echo.PUT(endPoint, password_managementHandler.PUT)
 	echo.DELETE(endPoint, password_managementHandler.DELETE)
 	echo.GET(endPoint+"/:id", password_managementHandler.GETBYID)
-	echo.POST(endPoint+"/:multi", password_managementHandler.MULTIPOST)
+	echo.POST(endPoint+"/forgot_password", password_managementHandler.MULTIPOST)
 	return nil
 }
 
