@@ -24,23 +24,65 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/auth": {
-            "post": {
-                "consumes": [
+        "/booking": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "auth"
+                    "booking"
                 ],
-                "summary": "Register new user",
+                "summary": "Get all bookings",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.Booking"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "booking"
+                ],
+                "summary": "Create a new booking",
                 "parameters": [
                     {
-                        "description": "Register user",
-                        "name": "profile",
+                        "description": "Booking Object",
+                        "name": "booking",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/structs.MyAuth"
+                            "$ref": "#/definitions/structs.Booking"
                         }
                     }
                 ],
@@ -48,13 +90,133 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/structs.Response"
+                            "$ref": "#/definitions/structs.Booking"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "booking"
+                ],
+                "summary": "Update an existing booking",
+                "parameters": [
+                    {
+                        "description": "Booking Object",
+                        "name": "booking",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.Booking"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.Booking"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "booking"
+                ],
+                "summary": "Delete a booking",
+                "parameters": [
+                    {
+                        "description": "Booking Object with GUID",
+                        "name": "booking",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.Booking"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.Booking"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
             }
         },
-        "/channel_priority": {
+        "/booking/{booking_guid}": {
             "get": {
                 "security": [
                     {
@@ -65,21 +227,48 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "channel_priority"
+                    "booking"
                 ],
-                "summary": "Get channel_priority",
+                "summary": "Get booking by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Booking GUID",
+                        "name": "booking_guid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "channel_priority",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/structs.ChannelPriority"
+                            "$ref": "#/definitions/structs.Booking"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
             }
         },
-        "/contact_admin": {
-            "get": {
+        "/booking/multi": {
+            "post": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -89,206 +278,14 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "contact_admin"
+                    "booking"
                 ],
-                "summary": "Get contact_admin",
+                "summary": "Multiple bookings creation",
                 "responses": {
-                    "200": {
-                        "description": "contact_admin",
+                    "501": {
+                        "description": "Not Implemented",
                         "schema": {
-                            "$ref": "#/definitions/structs.ContactAdmin"
-                        }
-                    }
-                }
-            }
-        },
-        "/dashboard": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "dashboard"
-                ],
-                "summary": "Get dashboard",
-                "responses": {
-                    "200": {
-                        "description": "dashboard",
-                        "schema": {
-                            "$ref": "#/definitions/structs.DashboardData"
-                        }
-                    }
-                }
-            }
-        },
-        "/invitation": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "invitation"
-                ],
-                "summary": "Get invitation",
-                "responses": {
-                    "200": {
-                        "description": "invitation",
-                        "schema": {
-                            "$ref": "#/definitions/structs.Invitation"
-                        }
-                    }
-                }
-            }
-        },
-        "/mention_thread": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "mention_thread"
-                ],
-                "summary": "Get mention_thread",
-                "responses": {
-                    "200": {
-                        "description": "mention_thread",
-                        "schema": {
-                            "$ref": "#/definitions/structs.MentionThread"
-                        }
-                    }
-                }
-            }
-        },
-        "/product": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "user"
-                ],
-                "summary": "Get user profile",
-                "responses": {
-                    "200": {
-                        "description": "product",
-                        "schema": {
-                            "$ref": "#/definitions/structs.Product"
-                        }
-                    }
-                }
-            }
-        },
-        "/report_bug": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "report_bug"
-                ],
-                "summary": "Get report_bug",
-                "responses": {
-                    "200": {
-                        "description": "report_bug",
-                        "schema": {
-                            "$ref": "#/definitions/structs.ReportBug"
-                        }
-                    }
-                }
-            }
-        },
-        "/reports": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "reports"
-                ],
-                "summary": "Get reports",
-                "responses": {
-                    "200": {
-                        "description": "reports",
-                        "schema": {
-                            "$ref": "#/definitions/structs.Reports"
-                        }
-                    }
-                }
-            }
-        },
-        "/temp_data": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "temp_data"
-                ],
-                "summary": "Get temp_data",
-                "responses": {
-                    "200": {
-                        "description": "temp_data",
-                        "schema": {
-                            "$ref": "#/definitions/structs.TempData"
-                        }
-                    }
-                }
-            }
-        },
-        "/upload_data": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "upload_data"
-                ],
-                "summary": "Get upload_data",
-                "responses": {
-                    "200": {
-                        "description": "upload_data",
-                        "schema": {
-                            "$ref": "#/definitions/structs.UploadData"
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
@@ -296,177 +293,69 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "structs.ChannelPriority": {
+        "handlers.ErrorResponse": {
             "type": "object",
             "properties": {
-                "channel_priority_id": {
-                    "type": "string"
-                },
-                "channel_priority_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.ContactAdmin": {
-            "type": "object",
-            "properties": {
-                "contact_admin_id": {
-                    "type": "string"
-                },
-                "contact_admin_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.DashboardData": {
-            "type": "object",
-            "properties": {
-                "all_locations": {},
-                "channels": {},
-                "location_members": {},
-                "locations": {},
-                "resolved_tasks": {},
-                "resolved_tickets": {},
-                "roles": {},
-                "total_tasks": {},
-                "total_tickets": {},
-                "users": {}
-            }
-        },
-        "structs.Invitation": {
-            "type": "object",
-            "properties": {
-                "invitation_id": {
-                    "type": "string"
-                },
-                "invitation_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.MentionThread": {
-            "type": "object",
-            "properties": {
-                "mention_thread_id": {
-                    "type": "string"
-                },
-                "mention_thread_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.MyAuth": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.Product": {
-            "type": "object",
-            "properties": {
-                "product_id": {
-                    "type": "string"
-                },
-                "product_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.ReportBug": {
-            "type": "object",
-            "properties": {
-                "report_bug_id": {
-                    "type": "string"
-                },
-                "report_bug_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.Reports": {
-            "type": "object",
-            "properties": {
-                "category": {
-                    "type": "string"
-                },
-                "created_by": {
-                    "type": "string"
-                },
-                "date_created": {
-                    "type": "string"
-                },
-                "excel_fullFileName": {
-                    "type": "string"
-                },
-                "fileType": {
-                    "type": "string"
-                },
-                "fileguid": {
-                    "type": "string"
-                },
-                "filesize": {
+                "status": {
                     "type": "integer"
                 },
-                "fullFileName": {
-                    "type": "string"
-                },
-                "isread": {
-                    "type": "boolean"
-                },
-                "repor_parameter": {
-                    "type": "string"
-                },
-                "reportguid": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.Response": {
-            "type": "object",
-            "properties": {
-                "data": {},
                 "message": {
                     "type": "string"
                 },
-                "valid": {
-                    "type": "boolean"
-                }
-            }
-        },
-        "structs.TempData": {
-            "type": "object",
-            "properties": {
-                "temp_data_id": {
-                    "type": "string"
-                },
-                "temp_data_name": {
+                "error": {
                     "type": "string"
                 }
             }
         },
-        "structs.UploadData": {
+        "structs.Booking": {
             "type": "object",
+            "required": [
+                "business_guid",
+                "client_guid",
+                "service_guid",
+                "booking_date",
+                "booking_time",
+                "booking_status",
+                "customer_relation",
+                "assign_staff_guid",
+                "payment_method"
+            ],
             "properties": {
-                "upload_data_id": {
+                "booking_guid": {
                     "type": "string"
                 },
-                "upload_data_name": {
+                "business_guid": {
+                    "type": "string"
+                },
+                "client_guid": {
+                    "type": "string"
+                },
+                "service_guid": {
+                    "type": "string"
+                },
+                "booking_date": {
+                    "type": "string"
+                },
+                "booking_time": {
+                    "type": "string"
+                },
+                "booking_status": {
+                    "type": "string"
+                },
+                "customer_relation": {
+                    "type": "string"
+                },
+                "assign_staff_guid": {
+                    "type": "string"
+                },
+                "payment_method": {
                     "type": "string"
                 }
             }
         }
     },
     "securityDefinitions": {
-        "BearerAuth": {
-            "description": "\"Bearer token\"",
+        "ApiKeyAuth": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"
@@ -480,8 +369,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "Swagger Example API",
-	Description:      "This is a sample server Petstore server.",
+	Title:            "Booking Service API",
+	Description:      "This is the Booking Service API documentation.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
