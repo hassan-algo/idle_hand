@@ -63,8 +63,12 @@ func (p *RequestReviewHandlers) DELETE(ctx echo.Context) error {
 }
 
 func (p *RequestReviewHandlers) GETBYID(ctx echo.Context) error {
-
-	return ctx.JSON(http.StatusOK, "GETBYID RequestReview")
+	request_review_guid := ctx.Param("request_review_guid")
+	mydata, err := p.apiBusiness.GETBYID(request_review_guid)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+	return ctx.JSON(http.StatusOK, mydata)
 }
 
 func (p *RequestReviewHandlers) MULTIPOST(ctx echo.Context) error {

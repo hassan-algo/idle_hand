@@ -29,7 +29,12 @@ func (b *BookingBusiness) GET(data interface{}) (interface{}, error) {
 	return bookings, nil
 }
 func (b *BookingBusiness) GETBYID(data interface{}) (interface{}, error) {
-	booking, _ := data.(structs.Booking)
+	booking_guid, _ := data.(string)
+	booking := structs.Booking{}
+	err := b.dbCon.Con.Where("booking_guid = ?", booking_guid).First(&booking).Error
+	if err != nil {
+		return nil, err
+	}
 	return booking, nil
 }
 func (b *BookingBusiness) POST(data interface{}) (interface{}, error) {

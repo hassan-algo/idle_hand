@@ -21,9 +21,7 @@ func (b *BusinessDetailsBusiness) Connect(dbConnection *db.DatabaseConnection) e
 func (b *BusinessDetailsBusiness) GET(data interface{}) (interface{}, error) {
 
 	business_detailss := structs.BusinessDetailss{
-		MyBusinessDetailss: []structs.BusinessDetails{
-		},
-
+		MyBusinessDetailss: []structs.BusinessDetails{},
 	}
 	err := b.dbCon.Con.Find(&business_detailss.MyBusinessDetailss).Error
 	if err != nil {
@@ -33,6 +31,10 @@ func (b *BusinessDetailsBusiness) GET(data interface{}) (interface{}, error) {
 }
 func (b *BusinessDetailsBusiness) GETBYID(data interface{}) (interface{}, error) {
 	business_details, _ := data.(structs.BusinessDetails)
+	err := b.dbCon.Con.Where("business_guid = ?", business_details.BusinessGUID).First(&business_details).Error
+	if err != nil {
+		return nil, err
+	}
 	return business_details, nil
 }
 func (b *BusinessDetailsBusiness) POST(data interface{}) (interface{}, error) {
@@ -44,14 +46,14 @@ func (b *BusinessDetailsBusiness) POST(data interface{}) (interface{}, error) {
 	return business_details, nil
 }
 func (b *BusinessDetailsBusiness) MULTIPOST(data interface{}) (interface{}, error) {
-		business_details, _ := data.(structs.BusinessDetails)
+	business_details, _ := data.(structs.BusinessDetails)
 	return business_details, nil
 }
 func (b *BusinessDetailsBusiness) PUT(data interface{}) (interface{}, error) {
-		business_details, _ := data.(structs.BusinessDetails)
+	business_details, _ := data.(structs.BusinessDetails)
 	return business_details, nil
 }
 func (b *BusinessDetailsBusiness) DELETE(data interface{}) (interface{}, error) {
-		business_details, _ := data.(structs.BusinessDetails)
+	business_details, _ := data.(structs.BusinessDetails)
 	return business_details, nil
 }

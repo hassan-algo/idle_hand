@@ -29,7 +29,12 @@ func (b *RequestReviewBusiness) GET(data interface{}) (interface{}, error) {
 	return request_reviews, nil
 }
 func (b *RequestReviewBusiness) GETBYID(data interface{}) (interface{}, error) {
-	request_review, _ := data.(structs.RequestReview)
+	request_review_guid, _ := data.(string)
+	request_review := structs.RequestReview{}
+	err := b.dbCon.Con.Where("request_review_guid = ?", request_review_guid).First(&request_review).Error
+	if err != nil {
+		return nil, err
+	}
 	return request_review, nil
 }
 func (b *RequestReviewBusiness) POST(data interface{}) (interface{}, error) {

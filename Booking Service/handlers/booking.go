@@ -68,8 +68,12 @@ func (p *BookingHandlers) DELETE(ctx echo.Context) error {
 }
 
 func (p *BookingHandlers) GETBYID(ctx echo.Context) error {
-
-	return ctx.JSON(http.StatusOK, "GETBYID Booking")
+	booking_guid := ctx.Param("booking_guid")
+	mydata, err := p.apiBusiness.GETBYID(booking_guid)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+	return ctx.JSON(http.StatusOK, mydata)
 }
 
 func (p *BookingHandlers) MULTIPOST(ctx echo.Context) error {
