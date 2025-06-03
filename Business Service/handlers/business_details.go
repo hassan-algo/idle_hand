@@ -68,12 +68,27 @@ func (p *BusinessDetailsHandlers) POST(ctx echo.Context) error {
 }
 
 func (p *BusinessDetailsHandlers) PUT(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, "PUT BusinessDetails")
+	data := extras.GetJSONRawBody(ctx)
+	my_struct := structs.BusinessDetails{
+		BusinessGUID: data["business_guid"].(string),
+	}
+	mydata, err := p.apiBusiness.PUT(my_struct)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+	return ctx.JSON(http.StatusOK, mydata)
 }
 func (p *BusinessDetailsHandlers) DELETE(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, "DELETE BusinessDetails")
+	data := extras.GetJSONRawBody(ctx)
+	my_struct := structs.BusinessDetails{
+		BusinessGUID: data["business_guid"].(string),
+	}
+	mydata, err := p.apiBusiness.DELETE(my_struct)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+	return ctx.JSON(http.StatusOK, mydata)
 }
-
 func (p *BusinessDetailsHandlers) GETBYID(ctx echo.Context) error {
 	businessGUID := ctx.Param("business_guid")
 	mydata, err := p.apiBusiness.GETBYID(businessGUID)

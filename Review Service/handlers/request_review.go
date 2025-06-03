@@ -56,10 +56,26 @@ func (p *RequestReviewHandlers) POST(ctx echo.Context) error {
 }
 
 func (p *RequestReviewHandlers) PUT(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, "PUT RequestReview")
+	data := extras.GetJSONRawBody(ctx)
+	my_struct := structs.RequestReview{
+		RequestReviewsGUID: data["request_reviews_guid"].(string),
+	}
+	mydata, err := p.apiBusiness.PUT(my_struct)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+	return ctx.JSON(http.StatusOK, mydata)
 }
 func (p *RequestReviewHandlers) DELETE(ctx echo.Context) error {
-	return ctx.JSON(http.StatusOK, "DELETE RequestReview")
+	data := extras.GetJSONRawBody(ctx)
+	my_struct := structs.RequestReview{
+		RequestReviewsGUID: data["request_reviews_guid"].(string),
+	}
+	mydata, err := p.apiBusiness.DELETE(my_struct)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, err.Error())
+	}
+	return ctx.JSON(http.StatusOK, mydata)
 }
 
 func (p *RequestReviewHandlers) GETBYID(ctx echo.Context) error {

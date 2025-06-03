@@ -51,9 +51,17 @@ func (b *RequestReviewBusiness) MULTIPOST(data interface{}) (interface{}, error)
 }
 func (b *RequestReviewBusiness) PUT(data interface{}) (interface{}, error) {
 	request_review, _ := data.(structs.RequestReview)
+	err := b.dbCon.Con.Model(&request_review).Where("request_review_guid = ?", request_review.RequestReviewsGUID).Updates(request_review).Error
+	if err != nil {
+		return nil, err
+	}
 	return request_review, nil
 }
 func (b *RequestReviewBusiness) DELETE(data interface{}) (interface{}, error) {
 	request_review, _ := data.(structs.RequestReview)
+	err := b.dbCon.Con.Model(&request_review).Where("request_review_guid = ?", request_review.RequestReviewsGUID).Update("is_deleted", 1).Error
+	if err != nil {
+		return nil, err
+	}
 	return request_review, nil
 }
