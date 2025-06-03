@@ -24,23 +24,65 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/auth": {
-            "post": {
-                "consumes": [
+        "/business_client": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "auth"
+                    "business_client"
                 ],
-                "summary": "Register new user",
+                "summary": "Get all business clients",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessClient"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_client"
+                ],
+                "summary": "Create a new business client",
                 "parameters": [
                     {
-                        "description": "Register user",
-                        "name": "profile",
+                        "description": "Business Client Object",
+                        "name": "business_client",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/structs.MyAuth"
+                            "$ref": "#/definitions/structs.BusinessClient"
                         }
                     }
                 ],
@@ -48,13 +90,133 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/structs.Response"
+                            "$ref": "#/definitions/structs.BusinessClient"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_client"
+                ],
+                "summary": "Update an existing business client",
+                "parameters": [
+                    {
+                        "description": "Business Client Object",
+                        "name": "business_client",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessClient"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessClient"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_client"
+                ],
+                "summary": "Delete a business client",
+                "parameters": [
+                    {
+                        "description": "Business Client Object with GUID",
+                        "name": "business_client",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessClient"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessClient"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
             }
         },
-        "/channel_priority": {
+        "/business_client/{business_client_guid}": {
             "get": {
                 "security": [
                     {
@@ -65,20 +227,71 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "channel_priority"
+                    "business_client"
                 ],
-                "summary": "Get channel_priority",
+                "summary": "Get business client by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Business Client GUID",
+                        "name": "business_client_guid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "channel_priority",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/structs.ChannelPriority"
+                            "$ref": "#/definitions/structs.BusinessClient"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
             }
         },
-        "/contact_admin": {
+        "/business_client/multi": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_client"
+                ],
+                "summary": "Multiple business clients creation",
+                "responses": {
+                    "501": {
+                        "description": "Not Implemented",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/business_staff": {
             "get": {
                 "security": [
                     {
@@ -89,20 +302,188 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "contact_admin"
+                    "business_staff"
                 ],
-                "summary": "Get contact_admin",
+                "summary": "Get all business staff",
                 "responses": {
                     "200": {
-                        "description": "contact_admin",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/structs.ContactAdmin"
+                            "$ref": "#/definitions/structs.BusinessStaff"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_staff"
+                ],
+                "summary": "Create a new business staff",
+                "parameters": [
+                    {
+                        "description": "Business Staff Object",
+                        "name": "business_staff",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessStaff"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessStaff"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_staff"
+                ],
+                "summary": "Update an existing business staff",
+                "parameters": [
+                    {
+                        "description": "Business Staff Object",
+                        "name": "business_staff",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessStaff"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessStaff"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "business_staff"
+                ],
+                "summary": "Delete a business staff",
+                "parameters": [
+                    {
+                        "description": "Business Staff Object with GUID",
+                        "name": "business_staff",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessStaff"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.BusinessStaff"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
             }
         },
-        "/dashboard": {
+        "/business_staff/{business_staff_guid}": {
             "get": {
                 "security": [
                     {
@@ -113,21 +494,48 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "dashboard"
+                    "business_staff"
                 ],
-                "summary": "Get dashboard",
+                "summary": "Get business staff by ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Business Staff GUID",
+                        "name": "business_staff_guid",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "dashboard",
+                        "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/structs.DashboardData"
+                            "$ref": "#/definitions/structs.BusinessStaff"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
             }
         },
-        "/invitation": {
-            "get": {
+        "/business_staff/multi": {
+            "post": {
                 "security": [
                     {
                         "ApiKeyAuth": []
@@ -137,158 +545,14 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "invitation"
+                    "business_staff"
                 ],
-                "summary": "Get invitation",
+                "summary": "Multiple business staff creation",
                 "responses": {
-                    "200": {
-                        "description": "invitation",
+                    "501": {
+                        "description": "Not Implemented",
                         "schema": {
-                            "$ref": "#/definitions/structs.Invitation"
-                        }
-                    }
-                }
-            }
-        },
-        "/mention_thread": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "mention_thread"
-                ],
-                "summary": "Get mention_thread",
-                "responses": {
-                    "200": {
-                        "description": "mention_thread",
-                        "schema": {
-                            "$ref": "#/definitions/structs.MentionThread"
-                        }
-                    }
-                }
-            }
-        },
-        "/product": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "user"
-                ],
-                "summary": "Get user profile",
-                "responses": {
-                    "200": {
-                        "description": "product",
-                        "schema": {
-                            "$ref": "#/definitions/structs.Product"
-                        }
-                    }
-                }
-            }
-        },
-        "/report_bug": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "report_bug"
-                ],
-                "summary": "Get report_bug",
-                "responses": {
-                    "200": {
-                        "description": "report_bug",
-                        "schema": {
-                            "$ref": "#/definitions/structs.ReportBug"
-                        }
-                    }
-                }
-            }
-        },
-        "/reports": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "reports"
-                ],
-                "summary": "Get reports",
-                "responses": {
-                    "200": {
-                        "description": "reports",
-                        "schema": {
-                            "$ref": "#/definitions/structs.Reports"
-                        }
-                    }
-                }
-            }
-        },
-        "/temp_data": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "temp_data"
-                ],
-                "summary": "Get temp_data",
-                "responses": {
-                    "200": {
-                        "description": "temp_data",
-                        "schema": {
-                            "$ref": "#/definitions/structs.TempData"
-                        }
-                    }
-                }
-            }
-        },
-        "/upload_data": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "upload_data"
-                ],
-                "summary": "Get upload_data",
-                "responses": {
-                    "200": {
-                        "description": "upload_data",
-                        "schema": {
-                            "$ref": "#/definitions/structs.UploadData"
+                            "$ref": "#/definitions/handlers.ErrorResponse"
                         }
                     }
                 }
@@ -296,177 +560,77 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "structs.ChannelPriority": {
+        "handlers.ErrorResponse": {
             "type": "object",
             "properties": {
-                "channel_priority_id": {
-                    "type": "string"
-                },
-                "channel_priority_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.ContactAdmin": {
-            "type": "object",
-            "properties": {
-                "contact_admin_id": {
-                    "type": "string"
-                },
-                "contact_admin_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.DashboardData": {
-            "type": "object",
-            "properties": {
-                "all_locations": {},
-                "channels": {},
-                "location_members": {},
-                "locations": {},
-                "resolved_tasks": {},
-                "resolved_tickets": {},
-                "roles": {},
-                "total_tasks": {},
-                "total_tickets": {},
-                "users": {}
-            }
-        },
-        "structs.Invitation": {
-            "type": "object",
-            "properties": {
-                "invitation_id": {
-                    "type": "string"
-                },
-                "invitation_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.MentionThread": {
-            "type": "object",
-            "properties": {
-                "mention_thread_id": {
-                    "type": "string"
-                },
-                "mention_thread_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.MyAuth": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.Product": {
-            "type": "object",
-            "properties": {
-                "product_id": {
-                    "type": "string"
-                },
-                "product_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.ReportBug": {
-            "type": "object",
-            "properties": {
-                "report_bug_id": {
-                    "type": "string"
-                },
-                "report_bug_name": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.Reports": {
-            "type": "object",
-            "properties": {
-                "category": {
-                    "type": "string"
-                },
-                "created_by": {
-                    "type": "string"
-                },
-                "date_created": {
-                    "type": "string"
-                },
-                "excel_fullFileName": {
-                    "type": "string"
-                },
-                "fileType": {
-                    "type": "string"
-                },
-                "fileguid": {
-                    "type": "string"
-                },
-                "filesize": {
+                "status": {
                     "type": "integer"
                 },
-                "fullFileName": {
-                    "type": "string"
-                },
-                "isread": {
-                    "type": "boolean"
-                },
-                "repor_parameter": {
-                    "type": "string"
-                },
-                "reportguid": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "structs.Response": {
-            "type": "object",
-            "properties": {
-                "data": {},
                 "message": {
                     "type": "string"
                 },
-                "valid": {
-                    "type": "boolean"
-                }
-            }
-        },
-        "structs.TempData": {
-            "type": "object",
-            "properties": {
-                "temp_data_id": {
-                    "type": "string"
-                },
-                "temp_data_name": {
+                "error": {
                     "type": "string"
                 }
             }
         },
-        "structs.UploadData": {
+        "structs.BusinessClient": {
             "type": "object",
+            "required": [
+                "client_guid",
+                "business_guid"
+            ],
             "properties": {
-                "upload_data_id": {
+                "business_client_guid": {
                     "type": "string"
                 },
-                "upload_data_name": {
+                "client_guid": {
+                    "type": "string"
+                },
+                "business_guid": {
+                    "type": "string"
+                },
+                "preferred_contact_method": {
+                    "type": "string"
+                },
+                "source": {
+                    "type": "string"
+                },
+                "note": {
+                    "type": "string"
+                }
+            }
+        },
+        "structs.BusinessStaff": {
+            "type": "object",
+            "required": [
+                "staff_guid",
+                "business_guid"
+            ],
+            "properties": {
+                "business_staff_guid": {
+                    "type": "string"
+                },
+                "staff_guid": {
+                    "type": "string"
+                },
+                "business_guid": {
+                    "type": "string"
+                },
+                "profession": {
+                    "type": "string"
+                },
+                "arrival_time": {
+                    "type": "string"
+                },
+                "leave_time": {
                     "type": "string"
                 }
             }
         }
     },
     "securityDefinitions": {
-        "BearerAuth": {
-            "description": "\"Bearer token\"",
+        "ApiKeyAuth": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"
@@ -480,8 +644,8 @@ var SwaggerInfo = &swag.Spec{
 	Host:             "",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "Swagger Example API",
-	Description:      "This is a sample server Petstore server.",
+	Title:            "User Management API",
+	Description:      "This is the User Management API documentation.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",
