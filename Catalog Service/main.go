@@ -50,6 +50,22 @@ func main() {
 		routes.NewCatalogRoutes(),
 		handlers.NewCatalogHandler(),
 		business.NewCatalogBusiness(), e, authAPI)
+	apis.NewAPI("/catalog_availability",
+		postgres,
+		routes.NewCatalogAvailabilityRoutes(),
+		handlers.NewCatalogAvailabilityHandler(),
+		business.NewCatalogAvailabilityBusiness(), e, authAPI)
+	apis.NewAPI("/offers",
+		postgres,
+		routes.NewOffersRoutes(),
+		handlers.NewOffersHandler(),
+		business.NewOffersBusiness(), e, authAPI)
+
+	apis.NewAPI("/business_policies",
+		postgres,
+		routes.NewBusinessPoliciesRoutes(),
+		handlers.NewBusinessPoliciesHandler(),
+		business.NewBusinessPoliciesBusiness(), e, authAPI)
 	// Serve the Swagger UI
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
