@@ -1,0 +1,292 @@
+basePath: /
+definitions:
+  structs.ChannelPriority:
+    properties:
+      channel_priority_id:
+        type: string
+      channel_priority_name:
+        type: string
+    type: object
+  structs.ContactAdmin:
+    properties:
+      contact_admin_id:
+        type: string
+      contact_admin_name:
+        type: string
+    type: object
+  structs.DashboardData:
+    properties:
+      all_locations: {}
+      channels: {}
+      location_members: {}
+      locations: {}
+      resolved_tasks: {}
+      resolved_tickets: {}
+      roles: {}
+      total_tasks: {}
+      total_tickets: {}
+      users: {}
+    type: object
+  structs.Invitation:
+    properties:
+      invitation_id:
+        type: string
+      invitation_name:
+        type: string
+    type: object
+  structs.MentionThread:
+    properties:
+      mention_thread_id:
+        type: string
+      mention_thread_name:
+        type: string
+    type: object
+  structs.MyAuth:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  structs.Product:
+    properties:
+      product_id:
+        type: string
+      product_name:
+        type: string
+    type: object
+  structs.ReportBug:
+    properties:
+      report_bug_id:
+        type: string
+      report_bug_name:
+        type: string
+    type: object
+  structs.Reports:
+    properties:
+      category:
+        type: string
+      created_by:
+        type: string
+      date_created:
+        type: string
+      excel_fullFileName:
+        type: string
+      fileType:
+        type: string
+      fileguid:
+        type: string
+      filesize:
+        type: integer
+      fullFileName:
+        type: string
+      isread:
+        type: boolean
+      repor_parameter:
+        type: string
+      reportguid:
+        type: string
+      title:
+        type: string
+    type: object
+  structs.Response:
+    properties:
+      data: {}
+      message:
+        type: string
+      valid:
+        type: boolean
+    type: object
+  structs.TempData:
+    properties:
+      temp_data_id:
+        type: string
+      temp_data_name:
+        type: string
+    type: object
+  structs.UploadData:
+    properties:
+      upload_data_id:
+        type: string
+      upload_data_name:
+        type: string
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Petstore server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /auth:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Register user
+        in: body
+        name: profile
+        required: true
+        schema:
+          $ref: '#/definitions/structs.MyAuth'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/structs.Response'
+      summary: Register new user
+      tags:
+      - auth
+  /channel_priority:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: channel_priority
+          schema:
+            $ref: '#/definitions/structs.ChannelPriority'
+      security:
+      - ApiKeyAuth: []
+      summary: Get channel_priority
+      tags:
+      - channel_priority
+  /contact_admin:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: contact_admin
+          schema:
+            $ref: '#/definitions/structs.ContactAdmin'
+      security:
+      - ApiKeyAuth: []
+      summary: Get contact_admin
+      tags:
+      - contact_admin
+  /dashboard:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: dashboard
+          schema:
+            $ref: '#/definitions/structs.DashboardData'
+      security:
+      - ApiKeyAuth: []
+      summary: Get dashboard
+      tags:
+      - dashboard
+  /invitation:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: invitation
+          schema:
+            $ref: '#/definitions/structs.Invitation'
+      security:
+      - ApiKeyAuth: []
+      summary: Get invitation
+      tags:
+      - invitation
+  /mention_thread:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: mention_thread
+          schema:
+            $ref: '#/definitions/structs.MentionThread'
+      security:
+      - ApiKeyAuth: []
+      summary: Get mention_thread
+      tags:
+      - mention_thread
+  /product:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: product
+          schema:
+            $ref: '#/definitions/structs.Product'
+      security:
+      - ApiKeyAuth: []
+      summary: Get user profile
+      tags:
+      - user
+  /report_bug:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: report_bug
+          schema:
+            $ref: '#/definitions/structs.ReportBug'
+      security:
+      - ApiKeyAuth: []
+      summary: Get report_bug
+      tags:
+      - report_bug
+  /reports:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: reports
+          schema:
+            $ref: '#/definitions/structs.Reports'
+      security:
+      - ApiKeyAuth: []
+      summary: Get reports
+      tags:
+      - reports
+  /temp_data:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: temp_data
+          schema:
+            $ref: '#/definitions/structs.TempData'
+      security:
+      - ApiKeyAuth: []
+      summary: Get temp_data
+      tags:
+      - temp_data
+  /upload_data:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: upload_data
+          schema:
+            $ref: '#/definitions/structs.UploadData'
+      security:
+      - ApiKeyAuth: []
+      summary: Get upload_data
+      tags:
+      - upload_data
+securityDefinitions:
+  BearerAuth:
+    description: '"Bearer token"'
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
