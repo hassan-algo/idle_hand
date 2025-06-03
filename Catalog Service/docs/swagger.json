@@ -1,0 +1,468 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample server Petstore server.",
+        "title": "Swagger Example API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "basePath": "/",
+    "paths": {
+        "/auth": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Register new user",
+                "parameters": [
+                    {
+                        "description": "Register user",
+                        "name": "profile",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/structs.MyAuth"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/structs.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/channel_priority": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "channel_priority"
+                ],
+                "summary": "Get channel_priority",
+                "responses": {
+                    "200": {
+                        "description": "channel_priority",
+                        "schema": {
+                            "$ref": "#/definitions/structs.ChannelPriority"
+                        }
+                    }
+                }
+            }
+        },
+        "/contact_admin": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "contact_admin"
+                ],
+                "summary": "Get contact_admin",
+                "responses": {
+                    "200": {
+                        "description": "contact_admin",
+                        "schema": {
+                            "$ref": "#/definitions/structs.ContactAdmin"
+                        }
+                    }
+                }
+            }
+        },
+        "/dashboard": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dashboard"
+                ],
+                "summary": "Get dashboard",
+                "responses": {
+                    "200": {
+                        "description": "dashboard",
+                        "schema": {
+                            "$ref": "#/definitions/structs.DashboardData"
+                        }
+                    }
+                }
+            }
+        },
+        "/invitation": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "invitation"
+                ],
+                "summary": "Get invitation",
+                "responses": {
+                    "200": {
+                        "description": "invitation",
+                        "schema": {
+                            "$ref": "#/definitions/structs.Invitation"
+                        }
+                    }
+                }
+            }
+        },
+        "/mention_thread": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "mention_thread"
+                ],
+                "summary": "Get mention_thread",
+                "responses": {
+                    "200": {
+                        "description": "mention_thread",
+                        "schema": {
+                            "$ref": "#/definitions/structs.MentionThread"
+                        }
+                    }
+                }
+            }
+        },
+        "/product": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get user profile",
+                "responses": {
+                    "200": {
+                        "description": "product",
+                        "schema": {
+                            "$ref": "#/definitions/structs.Product"
+                        }
+                    }
+                }
+            }
+        },
+        "/report_bug": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "report_bug"
+                ],
+                "summary": "Get report_bug",
+                "responses": {
+                    "200": {
+                        "description": "report_bug",
+                        "schema": {
+                            "$ref": "#/definitions/structs.ReportBug"
+                        }
+                    }
+                }
+            }
+        },
+        "/reports": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "reports"
+                ],
+                "summary": "Get reports",
+                "responses": {
+                    "200": {
+                        "description": "reports",
+                        "schema": {
+                            "$ref": "#/definitions/structs.Reports"
+                        }
+                    }
+                }
+            }
+        },
+        "/temp_data": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "temp_data"
+                ],
+                "summary": "Get temp_data",
+                "responses": {
+                    "200": {
+                        "description": "temp_data",
+                        "schema": {
+                            "$ref": "#/definitions/structs.TempData"
+                        }
+                    }
+                }
+            }
+        },
+        "/upload_data": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "upload_data"
+                ],
+                "summary": "Get upload_data",
+                "responses": {
+                    "200": {
+                        "description": "upload_data",
+                        "schema": {
+                            "$ref": "#/definitions/structs.UploadData"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "structs.ChannelPriority": {
+            "type": "object",
+            "properties": {
+                "channel_priority_id": {
+                    "type": "string"
+                },
+                "channel_priority_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "structs.ContactAdmin": {
+            "type": "object",
+            "properties": {
+                "contact_admin_id": {
+                    "type": "string"
+                },
+                "contact_admin_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "structs.DashboardData": {
+            "type": "object",
+            "properties": {
+                "all_locations": {},
+                "channels": {},
+                "location_members": {},
+                "locations": {},
+                "resolved_tasks": {},
+                "resolved_tickets": {},
+                "roles": {},
+                "total_tasks": {},
+                "total_tickets": {},
+                "users": {}
+            }
+        },
+        "structs.Invitation": {
+            "type": "object",
+            "properties": {
+                "invitation_id": {
+                    "type": "string"
+                },
+                "invitation_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "structs.MentionThread": {
+            "type": "object",
+            "properties": {
+                "mention_thread_id": {
+                    "type": "string"
+                },
+                "mention_thread_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "structs.MyAuth": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "structs.Product": {
+            "type": "object",
+            "properties": {
+                "product_id": {
+                    "type": "string"
+                },
+                "product_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "structs.ReportBug": {
+            "type": "object",
+            "properties": {
+                "report_bug_id": {
+                    "type": "string"
+                },
+                "report_bug_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "structs.Reports": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "type": "string"
+                },
+                "created_by": {
+                    "type": "string"
+                },
+                "date_created": {
+                    "type": "string"
+                },
+                "excel_fullFileName": {
+                    "type": "string"
+                },
+                "fileType": {
+                    "type": "string"
+                },
+                "fileguid": {
+                    "type": "string"
+                },
+                "filesize": {
+                    "type": "integer"
+                },
+                "fullFileName": {
+                    "type": "string"
+                },
+                "isread": {
+                    "type": "boolean"
+                },
+                "repor_parameter": {
+                    "type": "string"
+                },
+                "reportguid": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "structs.Response": {
+            "type": "object",
+            "properties": {
+                "data": {},
+                "message": {
+                    "type": "string"
+                },
+                "valid": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "structs.TempData": {
+            "type": "object",
+            "properties": {
+                "temp_data_id": {
+                    "type": "string"
+                },
+                "temp_data_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "structs.UploadData": {
+            "type": "object",
+            "properties": {
+                "upload_data_id": {
+                    "type": "string"
+                },
+                "upload_data_name": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "description": "\"Bearer token\"",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}
