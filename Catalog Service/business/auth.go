@@ -35,7 +35,7 @@ func (b *AuthBusiness) Authentication(email string, password string) (interface{
 	hashPassword := hex.EncodeToString(hash[:])
 
 	// Extended SQL query to fetch last_login along with other user details
-	query := "SELECT userguid, user_name, profile_photo, email, login_token, last_login FROM tbl_users WHERE (LOWER(email) = LOWER($1)) AND password = $2 AND is_deleted = '0'"
+	query := "SELECT user_guid, profile_pic, email, login_token, last_login FROM tbl_users WHERE (LOWER(email) = LOWER($1)) AND password = $2 AND is_deleted = '0'"
 	rowsRs, err := b.dbCon.Con.Raw(query, email, hashPassword).Rows()
 
 	if err != nil {
@@ -48,7 +48,7 @@ func (b *AuthBusiness) Authentication(email string, password string) (interface{
 	var obj structs.Credentials
 	for rowsRs.Next() {
 		var lastLogin sql.NullTime // Handling possible null values for last_login
-		err := rowsRs.Scan(&obj.UserGuid, &obj.FullName, &obj.ProfilePic, &obj.Email, &obj.Login_Token, &lastLogin)
+		err := rowsRs.Scan(&obj.UserGuid, &obj.ProfilePic, &obj.Email, &obj.Login_Token, &lastLogin)
 		if err != nil {
 			return structs.Response{Valid: false, Message: err.Error(), Data: nil}, err
 		}
