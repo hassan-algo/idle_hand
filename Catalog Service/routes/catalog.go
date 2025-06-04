@@ -14,12 +14,12 @@ func NewCatalogRoutes() *CatalogRoutes {
 
 func (r *CatalogRoutes) Connect(endPoint string, catalogHandler apis.APIHandler, echo *echo.Echo, auth apis.AuthHandler) error {
 
-	echo.GET(endPoint, catalogHandler.GET)
-	echo.POST(endPoint, catalogHandler.POST)
-	echo.PUT(endPoint, catalogHandler.PUT)
-	echo.DELETE(endPoint, catalogHandler.DELETE)
-	echo.GET(endPoint+"/:id", catalogHandler.GETBYID)
-	echo.POST(endPoint+"/:multi", catalogHandler.MULTIPOST)
+	echo.GET(endPoint, auth.Authenticate(catalogHandler.GET))
+	echo.POST(endPoint, auth.Authenticate(catalogHandler.POST))
+	echo.PUT(endPoint, auth.Authenticate(catalogHandler.PUT))
+	echo.DELETE(endPoint, auth.Authenticate(catalogHandler.DELETE))
+	echo.GET(endPoint+"/:id", auth.Authenticate(catalogHandler.GETBYID))
+	echo.POST(endPoint+"/:multi", auth.Authenticate(catalogHandler.MULTIPOST))
 	return nil
 }
 

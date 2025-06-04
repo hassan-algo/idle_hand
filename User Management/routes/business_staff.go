@@ -14,12 +14,12 @@ func NewBusinessStaffRoutes() *BusinessStaffRoutes {
 
 func (r *BusinessStaffRoutes) Connect(endPoint string, business_staffHandler apis.APIHandler, echo *echo.Echo, auth apis.AuthHandler) error {
 
-	echo.GET(endPoint, business_staffHandler.GET)
-	echo.POST(endPoint, business_staffHandler.POST)
-	echo.PUT(endPoint, business_staffHandler.PUT)
-	echo.DELETE(endPoint, business_staffHandler.DELETE)
-	echo.GET(endPoint+"/:id", business_staffHandler.GETBYID)
-	echo.POST(endPoint+"/:multi", business_staffHandler.MULTIPOST)
+	echo.GET(endPoint, auth.Authenticate(business_staffHandler.GET))
+	echo.POST(endPoint, auth.Authenticate(business_staffHandler.POST))
+	echo.PUT(endPoint, auth.Authenticate(business_staffHandler.PUT))
+	echo.DELETE(endPoint, auth.Authenticate(business_staffHandler.DELETE))
+	echo.GET(endPoint+"/:id", auth.Authenticate(business_staffHandler.GETBYID))
+	echo.POST(endPoint+"/:multi", auth.Authenticate(business_staffHandler.MULTIPOST))
 	return nil
 }
 

@@ -14,12 +14,12 @@ func NewBusinessRatingRoutes() *BusinessRatingRoutes {
 
 func (r *BusinessRatingRoutes) Connect(endPoint string, business_ratingHandler apis.APIHandler, echo *echo.Echo, auth apis.AuthHandler) error {
 
-	echo.GET(endPoint, business_ratingHandler.GET)
-	echo.POST(endPoint, business_ratingHandler.POST)
-	echo.PUT(endPoint, business_ratingHandler.PUT)
-	echo.DELETE(endPoint, business_ratingHandler.DELETE)
-	echo.GET(endPoint+"/:id", business_ratingHandler.GETBYID)
-	echo.POST(endPoint+"/:multi", business_ratingHandler.MULTIPOST)
+	echo.GET(endPoint, auth.Authenticate(business_ratingHandler.GET))
+	echo.POST(endPoint, auth.Authenticate(business_ratingHandler.POST))
+	echo.PUT(endPoint, auth.Authenticate(business_ratingHandler.PUT))
+	echo.DELETE(endPoint, auth.Authenticate(business_ratingHandler.DELETE))
+	echo.GET(endPoint+"/:id", auth.Authenticate(business_ratingHandler.GETBYID))
+	echo.POST(endPoint+"/:multi", auth.Authenticate(business_ratingHandler.MULTIPOST))
 	return nil
 }
 
