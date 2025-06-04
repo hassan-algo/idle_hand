@@ -15,6 +15,11 @@
         },
         "version": "1.0"
     },
+    "security": [
+        {
+            "BearerAuth": []
+        }
+    ],
     "basePath": "/",
     "paths": {
         "/auth": {
@@ -49,11 +54,6 @@
         },
         "/business_policies": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Get all business policies",
                 "produces": [
                     "application/json"
@@ -78,11 +78,6 @@
                 }
             },
             "put": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Update an existing business policy with the provided details",
                 "consumes": [
                     "application/json"
@@ -121,11 +116,6 @@
                 }
             },
             "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Create a new business policy with the provided details",
                 "consumes": [
                     "application/json"
@@ -164,11 +154,6 @@
                 }
             },
             "delete": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Delete a business policy by its GUID",
                 "consumes": [
                     "application/json"
@@ -209,11 +194,6 @@
         },
         "/business_policies/multi": {
             "post": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Create multiple business policies at once",
                 "consumes": [
                     "application/json"
@@ -237,11 +217,6 @@
         },
         "/business_policies/{business_policies_guid}": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "description": "Get a specific business policy by its GUID",
                 "produces": [
                     "application/json"
@@ -277,11 +252,6 @@
         },
         "/catalog": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -301,11 +271,6 @@
         },
         "/catalog_availability": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -325,11 +290,6 @@
         },
         "/offers": {
             "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -500,10 +460,10 @@
     },
     "securityDefinitions": {
         "BearerAuth": {
-            "description": "\"Bearer token\"",
             "type": "apiKey",
             "name": "Authorization",
-            "in": "header"
+            "in": "header",
+            "description": "Bearer token"
         }
     }
 }

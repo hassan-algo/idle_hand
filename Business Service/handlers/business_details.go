@@ -76,7 +76,7 @@ func (h *BusinessDetailsHandlers) Connect(business apis.APIBusiness) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_details [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_details
 func (p *BusinessDetailsHandlers) GET(ctx echo.Context) error {
 	mydata, err := p.apiBusiness.GET(nil)
@@ -95,7 +95,7 @@ func (p *BusinessDetailsHandlers) GET(ctx echo.Context) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_details [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_details
 func (p *BusinessDetailsHandlers) POST(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -218,7 +218,7 @@ func (p *BusinessDetailsHandlers) POST(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_details [put]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_details
 func (p *BusinessDetailsHandlers) PUT(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -250,7 +250,7 @@ func (p *BusinessDetailsHandlers) PUT(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_details [delete]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_details
 func (p *BusinessDetailsHandlers) DELETE(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -280,7 +280,7 @@ func (p *BusinessDetailsHandlers) DELETE(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_details/{business_guid} [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_details
 func (p *BusinessDetailsHandlers) GETBYID(ctx echo.Context) error {
 	businessGUID := ctx.Param("business_guid")
@@ -301,7 +301,7 @@ func (p *BusinessDetailsHandlers) GETBYID(ctx echo.Context) error {
 // @Produce json
 // @Success 501 {object} ErrorResponse "Not Implemented"
 // @Router /business_details/multi [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_details
 func (p *BusinessDetailsHandlers) MULTIPOST(ctx echo.Context) error {
 	return handleError(ctx, http.StatusNotImplemented, "Multiple business details creation is not implemented yet", nil)

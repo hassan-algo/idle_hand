@@ -48,7 +48,7 @@ func (h *BusinessRatingHandlers) Connect(business apis.APIBusiness) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_rating [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_rating
 func (p *BusinessRatingHandlers) GET(ctx echo.Context) error {
 	mydata, err := p.apiBusiness.GET(nil)
@@ -67,7 +67,7 @@ func (p *BusinessRatingHandlers) GET(ctx echo.Context) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_rating [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_rating
 func (p *BusinessRatingHandlers) POST(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -124,7 +124,7 @@ func (p *BusinessRatingHandlers) POST(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_rating [put]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_rating
 func (p *BusinessRatingHandlers) PUT(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -185,7 +185,7 @@ func (p *BusinessRatingHandlers) PUT(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_rating [delete]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_rating
 func (p *BusinessRatingHandlers) DELETE(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -215,7 +215,7 @@ func (p *BusinessRatingHandlers) DELETE(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_rating/{business_rating_guid} [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_rating
 func (p *BusinessRatingHandlers) GETBYID(ctx echo.Context) error {
 	business_rating_guid := ctx.Param("business_rating_guid")
@@ -236,7 +236,7 @@ func (p *BusinessRatingHandlers) GETBYID(ctx echo.Context) error {
 // @Produce json
 // @Success 501 {object} ErrorResponse "Not Implemented"
 // @Router /business_rating/multi [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_rating
 func (p *BusinessRatingHandlers) MULTIPOST(ctx echo.Context) error {
 	return handleError(ctx, http.StatusNotImplemented, "Multiple business ratings creation is not implemented yet", nil)

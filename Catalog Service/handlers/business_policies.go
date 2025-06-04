@@ -79,9 +79,10 @@ func (h *BusinessPoliciesHandlers) Connect(business apis.APIBusiness) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_policies [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_policies
 func (p *BusinessPoliciesHandlers) GET(ctx echo.Context) error {
+
 	mydata, err := p.apiBusiness.GET(nil)
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to fetch business policies", err)
@@ -98,7 +99,7 @@ func (p *BusinessPoliciesHandlers) GET(ctx echo.Context) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_policies [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_policies
 func (p *BusinessPoliciesHandlers) POST(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -179,7 +180,7 @@ func (p *BusinessPoliciesHandlers) POST(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_policies [put]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_policies
 func (p *BusinessPoliciesHandlers) PUT(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -265,7 +266,7 @@ func (p *BusinessPoliciesHandlers) PUT(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_policies [delete]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_policies
 func (p *BusinessPoliciesHandlers) DELETE(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -295,7 +296,7 @@ func (p *BusinessPoliciesHandlers) DELETE(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_policies/{business_policies_guid} [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_policies
 func (p *BusinessPoliciesHandlers) GETBYID(ctx echo.Context) error {
 	business_policies_guid := ctx.Param("business_policies_guid")
@@ -318,7 +319,7 @@ func (p *BusinessPoliciesHandlers) GETBYID(ctx echo.Context) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /business_policies/multi [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags business_policies
 func (p *BusinessPoliciesHandlers) MULTIPOST(ctx echo.Context) error {
 	return handleError(ctx, http.StatusNotImplemented, "Multiple business policies creation is not implemented yet", nil)

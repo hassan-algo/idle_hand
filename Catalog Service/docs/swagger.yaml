@@ -109,6 +109,8 @@ info:
   termsOfService: http://swagger.io/terms/
   title: Swagger Example API
   version: "1.0"
+security:
+  - BearerAuth: []
 paths:
   /auth:
     post:
@@ -152,11 +154,6 @@ paths:
           description: error message
           schema:
             type: string
-      security:
-      - ApiKeyAuth: []
-      summary: Delete a business policy
-      tags:
-      - business_policies
     get:
       description: Get all business policies
       produces:
@@ -170,11 +167,6 @@ paths:
           description: error message
           schema:
             type: string
-      security:
-      - ApiKeyAuth: []
-      summary: Get all business policies
-      tags:
-      - business_policies
     post:
       consumes:
       - application/json
@@ -197,11 +189,6 @@ paths:
           description: error message
           schema:
             type: string
-      security:
-      - ApiKeyAuth: []
-      summary: Create a new business policy
-      tags:
-      - business_policies
     put:
       consumes:
       - application/json
@@ -224,11 +211,6 @@ paths:
           description: error message
           schema:
             type: string
-      security:
-      - ApiKeyAuth: []
-      summary: Update a business policy
-      tags:
-      - business_policies
   /business_policies/{business_policies_guid}:
     get:
       description: Get a specific business policy by its GUID
@@ -249,11 +231,6 @@ paths:
           description: error message
           schema:
             type: string
-      security:
-      - ApiKeyAuth: []
-      summary: Get business policy by ID
-      tags:
-      - business_policies
   /business_policies/multi:
     post:
       consumes:
@@ -266,11 +243,6 @@ paths:
           description: MULTIPOST BusinessPolicies
           schema:
             type: string
-      security:
-      - ApiKeyAuth: []
-      summary: Multiple business policies creation
-      tags:
-      - business_policies
   /catalog:
     get:
       produces:
@@ -280,11 +252,6 @@ paths:
           description: catalog
           schema:
             $ref: '#/definitions/structs.Catalog'
-      security:
-      - ApiKeyAuth: []
-      summary: Get catalog
-      tags:
-      - catalog
   /catalog_availability:
     get:
       produces:
@@ -294,11 +261,6 @@ paths:
           description: catalog_availability
           schema:
             $ref: '#/definitions/structs.CatalogAvailability'
-      security:
-      - ApiKeyAuth: []
-      summary: Get catalog_availability
-      tags:
-      - catalog_availability
   /offers:
     get:
       produces:
@@ -308,14 +270,9 @@ paths:
           description: offers
           schema:
             $ref: '#/definitions/structs.Offers'
-      security:
-      - ApiKeyAuth: []
-      summary: Get offers
-      tags:
-      - offers
 securityDefinitions:
   BearerAuth:
-    description: '"Bearer token"'
+    description: 'Bearer token'
     in: header
     name: Authorization
     type: apiKey

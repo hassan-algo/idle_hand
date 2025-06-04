@@ -82,7 +82,7 @@ func (h *BookingHandlers) Connect(business apis.APIBusiness) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /booking [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags booking
 func (p *BookingHandlers) GET(ctx echo.Context) error {
 	mydata, err := p.apiBusiness.GET(nil)
@@ -101,7 +101,7 @@ func (p *BookingHandlers) GET(ctx echo.Context) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /booking [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags booking
 func (p *BookingHandlers) POST(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -188,7 +188,7 @@ func (p *BookingHandlers) POST(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /booking [put]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags booking
 func (p *BookingHandlers) PUT(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -280,7 +280,7 @@ func (p *BookingHandlers) PUT(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /booking [delete]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags booking
 func (p *BookingHandlers) DELETE(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -310,7 +310,7 @@ func (p *BookingHandlers) DELETE(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /booking/{booking_guid} [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags booking
 func (p *BookingHandlers) GETBYID(ctx echo.Context) error {
 	booking_guid := ctx.Param("booking_guid")
@@ -333,7 +333,7 @@ func (p *BookingHandlers) GETBYID(ctx echo.Context) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /booking/multi [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags booking
 func (p *BookingHandlers) MULTIPOST(ctx echo.Context) error {
 	return handleError(ctx, http.StatusNotImplemented, "Multiple bookings creation is not implemented yet", nil)

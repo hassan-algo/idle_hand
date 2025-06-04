@@ -85,7 +85,6 @@ func (b *AuthBusiness) Authentication(email string, password string) (interface{
 	}
 
 	resUser := structs.ResponseUserWithToken{
-		Name:       obj.FullName,
 		ProfilePic: obj.ProfilePic,
 		Email:      obj.Email,
 		Token:      signedToken + " " + results[0].UserGuid,
@@ -93,7 +92,7 @@ func (b *AuthBusiness) Authentication(email string, password string) (interface{
 
 	res := structs.Response{
 		Valid:   true,
-		Message: obj.UserType,
+		// Message: obj.UserType,
 		Data:    resUser,
 	}
 
@@ -108,7 +107,7 @@ func (b *AuthBusiness) Authenticate(userGuid string, token string) (error, strin
 		// role            string
 	)
 
-	err := b.dbCon.Con.Raw("SELECT login_token, userguid FROM tbl_users WHERE userguid = $1", userGuid).Row().Scan(&JWT_KEY, &updatedUserGuid)
+	err := b.dbCon.Con.Raw("SELECT login_token, user_guid FROM tbl_users WHERE user_guid = $1", userGuid).Row().Scan(&JWT_KEY, &updatedUserGuid)
 	if err == sql.ErrNoRows {
 		// extras.LogThisWithActor(i.e, "Can't get any rows", "") //
 		return errors.New("auth Failed2"), "", ""
@@ -129,7 +128,7 @@ func (b *AuthBusiness) Authenticate(userGuid string, token string) (error, strin
 		}
 
 		// extras.LogThisWithActor(i.e, "", "Candidate")
-		return nil, updatedUserGuid,"" //
+		return nil, updatedUserGuid, "" //
 	} else {
 		// extras.LogThisWithActor(i.e, err.Error(), "")
 		return errors.New("auth Failed5"), "", ""
@@ -140,7 +139,7 @@ func (b *AuthBusiness) Authenticate(userGuid string, token string) (error, strin
 // It takes the user's unique identifier (userguid) as an argument and returns the login token and any potential errors encountered.
 func (b *AuthBusiness) getLoginToken(userGuid string) (string, error) {
 	// Define the SQL query to fetch the login token for the given userguid
-	query := `SELECT login_token FROM tbl_users WHERE userguid = $1`
+	query := `SELECT login_token FROM tbl_users WHERE user_guid = $1`
 	// Prepare and execute the query
 	row := b.dbCon.Con.Raw(query, userGuid).Row()
 

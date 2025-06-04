@@ -57,7 +57,7 @@ func (h *CatalogAvailabilityHandlers) Connect(business apis.APIBusiness) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /catalog_availability [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags catalog_availability
 func (p *CatalogAvailabilityHandlers) GET(ctx echo.Context) error {
 	mydata, err := p.apiBusiness.GET(nil)
@@ -76,7 +76,7 @@ func (p *CatalogAvailabilityHandlers) GET(ctx echo.Context) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /catalog_availability [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags catalog_availability
 func (p *CatalogAvailabilityHandlers) POST(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -163,7 +163,7 @@ func (p *CatalogAvailabilityHandlers) POST(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /catalog_availability [put]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags catalog_availability
 func (p *CatalogAvailabilityHandlers) PUT(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -255,7 +255,7 @@ func (p *CatalogAvailabilityHandlers) PUT(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /catalog_availability [delete]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags catalog_availability
 func (p *CatalogAvailabilityHandlers) DELETE(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -285,7 +285,7 @@ func (p *CatalogAvailabilityHandlers) DELETE(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /catalog_availability/{catalog_availability_guid} [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags catalog_availability
 func (p *CatalogAvailabilityHandlers) GETBYID(ctx echo.Context) error {
 	catalog_availability_guid := ctx.Param("catalog_availability_guid")
@@ -308,7 +308,7 @@ func (p *CatalogAvailabilityHandlers) GETBYID(ctx echo.Context) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /catalog_availability/multi [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags catalog_availability
 func (p *CatalogAvailabilityHandlers) MULTIPOST(ctx echo.Context) error {
 	return handleError(ctx, http.StatusNotImplemented, "Multiple catalog availabilities creation is not implemented yet", nil)

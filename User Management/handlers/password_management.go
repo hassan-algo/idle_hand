@@ -29,7 +29,7 @@ func (h *PasswordManagementHandlers) Connect(business apis.APIBusiness) error {
 // @Failure 400 {object} handlers.ErrorResponse "Bad Request"
 // @Failure 500 {object} handlers.ErrorResponse "Internal Server Error"
 // @Router /password_management [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags password_management
 func (p *PasswordManagementHandlers) GET(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, "GET PasswordManagement")
@@ -44,7 +44,7 @@ func (p *PasswordManagementHandlers) GET(ctx echo.Context) error {
 // @Failure 400 {object} handlers.ErrorResponse "Bad Request"
 // @Failure 500 {object} handlers.ErrorResponse "Internal Server Error"
 // @Router /password_management [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags password_management
 func (p *PasswordManagementHandlers) POST(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, "POST PasswordManagement")
@@ -60,7 +60,7 @@ func (p *PasswordManagementHandlers) POST(ctx echo.Context) error {
 // @Failure 404 {object} handlers.ErrorResponse "Not Found"
 // @Failure 500 {object} handlers.ErrorResponse "Internal Server Error"
 // @Router /password_management [put]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags password_management
 func (p *PasswordManagementHandlers) PUT(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -87,7 +87,7 @@ func (p *PasswordManagementHandlers) PUT(ctx echo.Context) error {
 // @Failure 404 {object} handlers.ErrorResponse "Not Found"
 // @Failure 500 {object} handlers.ErrorResponse "Internal Server Error"
 // @Router /password_management [delete]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags password_management
 func (p *PasswordManagementHandlers) DELETE(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, "DELETE PasswordManagement")
@@ -102,7 +102,7 @@ func (p *PasswordManagementHandlers) DELETE(ctx echo.Context) error {
 // @Failure 404 {object} handlers.ErrorResponse "Not Found"
 // @Failure 500 {object} handlers.ErrorResponse "Internal Server Error"
 // @Router /password_management/{password_management_guid} [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags password_management
 func (p *PasswordManagementHandlers) GETBYID(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, "GETBYID PasswordManagement")
@@ -117,7 +117,7 @@ func (p *PasswordManagementHandlers) GETBYID(ctx echo.Context) error {
 // @Failure 400 {object} handlers.ErrorResponse "Bad Request"
 // @Failure 500 {object} handlers.ErrorResponse "Internal Server Error"
 // @Router /password_management/multi [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags password_management
 func (p *PasswordManagementHandlers) MULTIPOST(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)

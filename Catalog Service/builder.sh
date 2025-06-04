@@ -84,7 +84,7 @@ func (h *${1}Handlers) Connect(business apis.APIBusiness) error {
 // @Produce json
 // @Success 200 {object} structs.${1} "${filename}"
 // @Router /${filename} [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags ${filename}
 func (p *${1}Handlers) GET(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, "GET $1")

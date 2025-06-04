@@ -153,7 +153,7 @@ paths:
           schema:
             $ref: '#/definitions/structs.ChannelPriority'
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Get channel_priority
       tags:
       - channel_priority
@@ -167,7 +167,7 @@ paths:
           schema:
             $ref: '#/definitions/structs.ContactAdmin'
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Get contact_admin
       tags:
       - contact_admin
@@ -181,7 +181,7 @@ paths:
           schema:
             $ref: '#/definitions/structs.DashboardData'
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Get dashboard
       tags:
       - dashboard
@@ -195,7 +195,7 @@ paths:
           schema:
             $ref: '#/definitions/structs.Invitation'
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Get invitation
       tags:
       - invitation
@@ -209,7 +209,7 @@ paths:
           schema:
             $ref: '#/definitions/structs.MentionThread'
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Get mention_thread
       tags:
       - mention_thread
@@ -223,7 +223,7 @@ paths:
           schema:
             $ref: '#/definitions/structs.Product'
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Get user profile
       tags:
       - user
@@ -237,7 +237,7 @@ paths:
           schema:
             $ref: '#/definitions/structs.ReportBug'
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Get report_bug
       tags:
       - report_bug
@@ -251,7 +251,7 @@ paths:
           schema:
             $ref: '#/definitions/structs.Reports'
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Get reports
       tags:
       - reports
@@ -265,7 +265,7 @@ paths:
           schema:
             $ref: '#/definitions/structs.TempData'
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Get temp_data
       tags:
       - temp_data
@@ -279,7 +279,7 @@ paths:
           schema:
             $ref: '#/definitions/structs.UploadData'
       security:
-      - ApiKeyAuth: []
+      - BearerAuth: []
       summary: Get upload_data
       tags:
       - upload_data

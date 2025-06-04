@@ -93,7 +93,7 @@ func (h *${1}Handlers) Connect(business apis.APIBusiness) error {
 // @Produce json
 // @Success 200 {object} structs.${1} "${a}"
 // @Router /${a} [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags ${a}
 func (h *${1}Handlers) GET(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, structs.Response{Message: "Get ${1}", Valid: true, Data: nil})
@@ -105,7 +105,7 @@ func (h *${1}Handlers) GET(ctx echo.Context) error {
 // @Param  product body structs.${1} true "Post ${a}"
 // @Success 200 {object} structs.Response
 // @Router /${a} [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags ${a}
 func (h *${1}Handlers) POST(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, structs.Response{Message: "Post ${1}", Valid: true, Data: nil})
@@ -117,7 +117,7 @@ func (h *${1}Handlers) POST(ctx echo.Context) error {
 // @Param  product body structs.${1} true "Put ${a}"
 // @Success 200 {object} structs.Response
 // @Router /${a} [put]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags ${a}
 func (h *${1}Handlers) PUT(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, structs.Response{Message: "Put ${1}", Valid: true, Data: nil})
@@ -129,7 +129,7 @@ func (h *${1}Handlers) PUT(ctx echo.Context) error {
 // @Param  product body structs.${1} true "Delete ${a}"
 // @Success 200 {object} structs.Response
 // @Router /${a} [delete]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags ${a}
 func (h *${1}Handlers) DELETE(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, structs.Response{Message: "Delete ${1}", Valid: true, Data: nil})
@@ -141,7 +141,7 @@ func (h *${1}Handlers) DELETE(ctx echo.Context) error {
 // @Param id path string true "id"
 // @Success 200 {object} structs.${1} "${a}"
 // @Router /${a}/{id} [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags ${a}
 func (h *${1}Handlers) GETBYID(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, structs.Response{Message: "Get ${a} by id", Valid: true, Data: nil})
@@ -153,7 +153,7 @@ func (h *${1}Handlers) GETBYID(ctx echo.Context) error {
 // @Param  product body structs.${1}s true "Multipost ${a}"
 // @Success 200 {object} structs.Response
 // @Router /${a}/multi [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags ${a}
 func (h *${1}Handlers) MULTIPOST(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, structs.Response{Message: "Multipost ${1}", Valid: true, Data: nil})

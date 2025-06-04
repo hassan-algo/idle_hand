@@ -54,7 +54,7 @@ func (h *CatalogHandlers) Connect(business apis.APIBusiness) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /catalog [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags catalog
 func (p *CatalogHandlers) GET(ctx echo.Context) error {
 	mydata, err := p.apiBusiness.GET(nil)
@@ -73,7 +73,7 @@ func (p *CatalogHandlers) GET(ctx echo.Context) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /catalog [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags catalog
 func (p *CatalogHandlers) POST(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -154,7 +154,7 @@ func (p *CatalogHandlers) POST(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /catalog [put]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags catalog
 func (p *CatalogHandlers) PUT(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
@@ -239,7 +239,7 @@ func (p *CatalogHandlers) PUT(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /catalog/{catalog_guid} [get]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags catalog
 func (p *CatalogHandlers) GETBYID(ctx echo.Context) error {
 	catalog_guid := ctx.Param("catalog_guid")
@@ -262,7 +262,7 @@ func (p *CatalogHandlers) GETBYID(ctx echo.Context) error {
 // @Failure 400 {object} ErrorResponse "Bad Request"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /catalog/multi [post]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags catalog
 func (p *CatalogHandlers) MULTIPOST(ctx echo.Context) error {
 	return handleError(ctx, http.StatusNotImplemented, "Multiple catalogs creation is not implemented yet", nil)
@@ -278,7 +278,7 @@ func (p *CatalogHandlers) MULTIPOST(ctx echo.Context) error {
 // @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /catalog [delete]
-// @Security ApiKeyAuth
+// @Security BearerAuth
 // @Tags catalog
 func (p *CatalogHandlers) DELETE(ctx echo.Context) error {
 	data := extras.GetJSONRawBody(ctx)
