@@ -91,9 +91,9 @@ func (b *AuthBusiness) Authentication(email string, password string) (interface{
 	}
 
 	res := structs.Response{
-		Valid:   true,
+		Valid: true,
 		// Message: obj.UserType,
-		Data:    resUser,
+		Data: resUser,
 	}
 
 	return res, nil
@@ -108,12 +108,13 @@ func (b *AuthBusiness) Authenticate(userGuid string, token string) (error, strin
 	)
 
 	err := b.dbCon.Con.Raw("SELECT login_token, user_guid FROM tbl_users WHERE user_guid = $1", userGuid).Row().Scan(&JWT_KEY, &updatedUserGuid)
+	
 	if err == sql.ErrNoRows {
 		// extras.LogThisWithActor(i.e, "Can't get any rows", "") //
-		return errors.New("auth Failed2"), "", ""
+		return fmt.Errorf("auth failed 2: %v", err), "", ""
 	} else if err != nil {
 		// extras.LogThisWithActor(i.e, err.Error(), "")
-		return errors.New("server Error"), "", ""
+		return fmt.Errorf("server error: %v", err), "", ""
 	}
 
 	if JWT_KEY != "" {
@@ -123,15 +124,13 @@ func (b *AuthBusiness) Authenticate(userGuid string, token string) (error, strin
 		})
 		if err != nil {
 			// extras.LogThisWithActor(i.e, err.Error(), "") //
-
-			return errors.New("auth Failed3"), "", ""
+			return fmt.Errorf("token validation failed: %v", err), "", ""
 		}
-
 		// extras.LogThisWithActor(i.e, "", "Candidate")
 		return nil, updatedUserGuid, "" //
 	} else {
 		// extras.LogThisWithActor(i.e, err.Error(), "")
-		return errors.New("auth Failed5"), "", ""
+		return fmt.Errorf("auth failed 5: %v", err), "", ""
 	}
 }
 

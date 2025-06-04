@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -56,7 +57,9 @@ func (h *AuthHandlers) Authenticate(f func(ec echo.Context) error, role ...strin
 			}
 			return ec.JSON(http.StatusUnauthorized, res)
 		}
+		// fmt.Println("authHeader", authHeader)
 		splitHeader := strings.Split(authHeader, " ")
+		// fmt.Println("splitHeader", splitHeader)
 
 		if len(splitHeader) < 3 {
 			res := structs.Response{
@@ -69,6 +72,8 @@ func (h *AuthHandlers) Authenticate(f func(ec echo.Context) error, role ...strin
 
 		userGuid := splitHeader[2]
 		token := splitHeader[1]
+		fmt.Println("userGuid", userGuid)
+		fmt.Println("token", token)
 
 		err, userGuid, _ := h.authBusiness.Authenticate(userGuid, token)
 
