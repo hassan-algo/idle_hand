@@ -236,9 +236,10 @@ func (b *AuthBusiness) Authentication(email string, password string) (interface{
 		}
 
 		resUser := structs.ResponseUserWithToken{
-			Name:  results[0].FullName,
-			Email: results[0].Email,
-			Token: signedToken + " " + results[0].UserGuid, // appending userguid to the token for user identification
+			UserGuid: 	results[0].UserGuid,
+			Name:  		results[0].FullName,
+			Email: 		results[0].Email,
+			Token: 		signedToken + " " + results[0].UserGuid, // appending userguid to the token for user identification
 		}
 
 		res := structs.Response{
@@ -416,9 +417,10 @@ type Response struct {
 	Data    interface{} \`json:"data"\`
 }
 type ResponseUserWithToken struct {
-	Name  string \`json:"name"\`
-	Email string \`json:"email"\`
-	Token string \`json:"token"\`
+	UserGuid    string \`json:"user_guid"\`
+	Name  		string \`json:"name"\`
+	Email 		string \`json:"email"\`
+	Token 		string \`json:"token"\`
 }
 
 type Credentials struct {

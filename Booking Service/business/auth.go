@@ -85,15 +85,16 @@ func (b *AuthBusiness) Authentication(email string, password string) (interface{
 	}
 
 	resUser := structs.ResponseUserWithToken{
+		UserGuid:   results[0].UserGuid,
 		ProfilePic: obj.ProfilePic,
 		Email:      obj.Email,
 		Token:      signedToken + " " + results[0].UserGuid,
 	}
 
 	res := structs.Response{
-		Valid:   true,
+		Valid: true,
 		// Message: obj.UserType,
-		Data:    resUser,
+		Data: resUser,
 	}
 
 	return res, nil

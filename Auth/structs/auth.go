@@ -27,7 +27,7 @@ type Response struct {
 	Data    interface{} `json:"data"`
 }
 type ResponseUserWithToken struct {
-	// UserGuid   string `json:"userguid,omitempty"`
+	UserGuid   string `json:"user_guid,omitempty"`
 	Name       string `json:"name,omitempty"`
 	ProfilePic string `json:"profilepic,omitempty"`
 	Email      string `json:"email,omitempty"`

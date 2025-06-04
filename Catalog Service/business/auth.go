@@ -85,6 +85,7 @@ func (b *AuthBusiness) Authentication(email string, password string) (interface{
 	}
 
 	resUser := structs.ResponseUserWithToken{
+		UserGuid:   results[0].UserGuid,
 		ProfilePic: obj.ProfilePic,
 		Email:      obj.Email,
 		Token:      signedToken + " " + results[0].UserGuid,
