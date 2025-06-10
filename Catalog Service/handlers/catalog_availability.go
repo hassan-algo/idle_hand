@@ -150,7 +150,12 @@ func (p *CatalogAvailabilityHandlers) POST(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to create catalog availability", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Catalog availability created successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Update a catalog availability
@@ -242,7 +247,12 @@ func (p *CatalogAvailabilityHandlers) PUT(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to update catalog availability", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Catalog availability updated successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Delete a catalog availability
@@ -273,7 +283,12 @@ func (p *CatalogAvailabilityHandlers) DELETE(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to delete catalog availability", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Catalog availability deleted successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Get catalog availability by ID
@@ -297,7 +312,12 @@ func (p *CatalogAvailabilityHandlers) GETBYID(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to fetch catalog availability", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Catalog availability fetched successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Multiple catalog availabilities creation

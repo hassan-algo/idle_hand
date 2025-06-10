@@ -87,7 +87,12 @@ func (p *BusinessPoliciesHandlers) GET(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to fetch business policies", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Business policies fetched successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Create a new business policy
@@ -167,7 +172,12 @@ func (p *BusinessPoliciesHandlers) POST(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to create business policy", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Business policy created successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Update a business policy
@@ -253,7 +263,12 @@ func (p *BusinessPoliciesHandlers) PUT(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to update business policy", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Business policy updated successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Delete a business policy
@@ -284,7 +299,12 @@ func (p *BusinessPoliciesHandlers) DELETE(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to delete business policy", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Business policy deleted successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Get business policy by ID
@@ -308,7 +328,12 @@ func (p *BusinessPoliciesHandlers) GETBYID(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to fetch business policy", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Business policy fetched successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Multiple business policies creation

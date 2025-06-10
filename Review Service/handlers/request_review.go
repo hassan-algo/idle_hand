@@ -68,7 +68,12 @@ func (p *RequestReviewHandlers) GET(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to fetch request reviews", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Request reviews fetched successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Create a new request review
@@ -113,7 +118,12 @@ func (p *RequestReviewHandlers) POST(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to create request review", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Request review created successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Update request review
@@ -144,7 +154,12 @@ func (p *RequestReviewHandlers) PUT(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to update request review", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Request review updated successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Delete request review
@@ -175,7 +190,12 @@ func (p *RequestReviewHandlers) DELETE(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to delete request review", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Request review deleted successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Get request review by ID
@@ -199,7 +219,12 @@ func (p *RequestReviewHandlers) GETBYID(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to fetch request review", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Request review fetched successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Multiple request reviews creation

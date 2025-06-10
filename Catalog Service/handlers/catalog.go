@@ -61,7 +61,12 @@ func (p *CatalogHandlers) GET(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to fetch catalogs", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Catalogs fetched successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Create a new catalog
@@ -141,7 +146,12 @@ func (p *CatalogHandlers) POST(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to create catalog", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Catalog created successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Update a catalog
@@ -227,7 +237,12 @@ func (p *CatalogHandlers) PUT(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to update catalog", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Catalog updated successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Get catalog by ID
@@ -251,7 +266,12 @@ func (p *CatalogHandlers) GETBYID(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to fetch catalog", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Catalog fetched successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Multiple catalogs creation
@@ -296,5 +316,10 @@ func (p *CatalogHandlers) DELETE(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to delete catalog", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Catalog deleted successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }

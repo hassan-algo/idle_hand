@@ -89,7 +89,12 @@ func (p *BookingHandlers) GET(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to fetch bookings", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Bookings fetched successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Create a new booking
@@ -175,7 +180,12 @@ func (p *BookingHandlers) POST(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to create booking", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Booking created successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Update a booking
@@ -267,7 +277,12 @@ func (p *BookingHandlers) PUT(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to update booking", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Booking updated successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Delete a booking
@@ -298,7 +313,12 @@ func (p *BookingHandlers) DELETE(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to delete booking", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Booking deleted successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Get booking by ID
@@ -322,7 +342,12 @@ func (p *BookingHandlers) GETBYID(ctx echo.Context) error {
 	if err != nil {
 		return handleError(ctx, http.StatusInternalServerError, "Failed to fetch booking", err)
 	}
-	return ctx.JSON(http.StatusOK, mydata)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Booking fetched successfully",
+		Data:        mydata,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Multiple bookings creation

@@ -74,7 +74,12 @@ func (p *PasswordManagementHandlers) PUT(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	return ctx.JSON(http.StatusOK, message)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Password management updated successfully",
+		Data:        message,
+		Status_code: http.StatusOK,
+	})
 }
 
 // @Summary Delete password management
@@ -129,5 +134,10 @@ func (p *PasswordManagementHandlers) MULTIPOST(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	return ctx.JSON(http.StatusOK, message)
+	return ctx.JSON(http.StatusOK, structs.Response{
+		Valid:       true,
+		Message:     "Password management created successfully",
+		Data:        message,
+		Status_code: http.StatusOK,
+	})
 }
